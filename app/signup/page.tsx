@@ -1,6 +1,16 @@
+import { verifyJWT } from "@/util/jwt";
+import { cookies } from "next/headers";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-const SignUp = () => {
+const SignUp = async () => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  const decoded = token ? verifyJWT(token) : null;
+
+  if (decoded) {
+    redirect("/");
+  }
   return (
     <section className="w-full min-h-screen py-8 px-8 flex flex-col items-center">
       <header className="py-4">
