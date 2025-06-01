@@ -3,11 +3,15 @@
 import Image from "next/image";
 import React from "react";
 import logo from "@/public/icons/icon-logo.png";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
 const Nav = () => {
   const router = useRouter();
+  const pathName = usePathname();
+  if (pathName === "/signin" || pathName === "/signup") {
+    return null;
+  }
   return (
     <nav className="fixed top-0 left-0 w-full h-14 px-2 flex items-center border-b border-[#bebebe]">
       <ul className="flex items-center gap-4 text-sm">
