@@ -1,12 +1,14 @@
 import { connectDB } from "@/util/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import { signJWT } from "@/util/jwt";
 
 export async function POST(req: NextRequest) {
-  const data = await req.formData();
-  const id = data.get("id")?.toString();
-  const password = data.get("password")?.toString();
+  const body = await req.json();
+  const { id, password } = body;
+
   const db = (await connectDB).db("donson");
+
   if (!id || !password) {
     return NextResponse.json(
       { message: "모든 필드를 입력해주세요", status: 400 },
@@ -33,10 +35,19 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    return NextResponse.json(
+    const token = signJWT({ id });
+    const res = NextResponse.json(
       { message: "로그인에 성공하였습니다.", status: 200 },
       { status: 200 }
     );
+    res.cookies.set("token", token, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60,
+      secure: false,
+    });
+
+    return res;
   } catch (error) {
     console.error("서버 에러입니다.", error);
     return NextResponse.json(
