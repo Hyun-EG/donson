@@ -9,13 +9,12 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    const formData = new FormData();
-    formData.append("id", id);
-    formData.append("password", password);
-
     const res = await fetch("/api/signin", {
       method: "POST",
-      body: formData,
+      body: JSON.stringify({ id, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     const result = await res.json();
