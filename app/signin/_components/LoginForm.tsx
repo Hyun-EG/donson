@@ -33,6 +33,9 @@ const LoginForm = () => {
         onChange={(e) => {
           setId(e.target.value);
         }}
+        onKeyDown={(e) => {
+          e.key === "Enter" ? handleLogin() : null;
+        }}
         className="w-full h-10 px-2 border border-[#bebebe] bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none"
         type="text"
         placeholder="아이디를 입력해주세요."
@@ -41,6 +44,9 @@ const LoginForm = () => {
         value={password}
         onChange={(e) => {
           setPassword(e.target.value);
+        }}
+        onKeyDown={(e) => {
+          e.key === "Enter" ? handleLogin() : null;
         }}
         className="w-full h-10 px-2 border border-[#bebebe] bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none"
         type="password"
