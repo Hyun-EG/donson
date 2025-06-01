@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LoginForm from "./_components/LoginForm";
 
 const SignIn = () => {
   return (
@@ -7,30 +8,7 @@ const SignIn = () => {
         <span className="text-3xl font-bold">DONSON</span>
       </header>
       <main className="w-full">
-        <form
-          className="flex flex-col gap-2"
-          action="/api/signin"
-          method="POST"
-        >
-          <input
-            name="id"
-            className="w-full h-10 px-2 border border-[#bebebe] bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none"
-            type="text"
-            placeholder="아이디를 입력해주세요."
-          />
-          <input
-            name="password"
-            className="w-full h-10 px-2 border border-[#bebebe] bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none"
-            type="password"
-            placeholder="비밀번호를 입력해주세요."
-          />
-          <button
-            className="w-full h-10 bg-sky-500 text-white rounded-xl"
-            type="submit"
-          >
-            로그인
-          </button>
-        </form>
+        <LoginForm />
         <article className="py-4">
           <p className="text-center">
             아직 회원이 아니신가요?
