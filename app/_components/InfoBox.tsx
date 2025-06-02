@@ -1,11 +1,12 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const InfoBox = ({ userId }: { userId: string }) => {
+  const [ocid, setOcid] = useState("");
   useEffect(() => {
     const getOcid = async () => {
       try {
-        const res = await fetch("/api/get-char-ocid", {
+        const res = await fetch("/api/add-char-ocid", {
           method: "POST",
           body: JSON.stringify({ userId }),
           headers: {
@@ -23,7 +24,28 @@ const InfoBox = ({ userId }: { userId: string }) => {
 
     getOcid();
   }, [userId]);
-  return <div>{userId}</div>;
+
+  useEffect(() => {
+    const getCharInfo = async () => {
+      const res = await fetch("/api/get-char-ocid", {
+        method: "POST",
+        body: JSON.stringify({ userId }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+      setOcid(data.ocid);
+    };
+    getCharInfo();
+  });
+  return (
+    <div>
+      <div>{userId}</div>
+      <div>{ocid}</div>
+    </div>
+  );
 };
 
 export default InfoBox;
