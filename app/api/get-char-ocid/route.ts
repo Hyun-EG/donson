@@ -1,15 +1,23 @@
+import { connectDB } from "@/util/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
 const API_KEY = `${process.env.NEXT_PUBLIC_NEXON_API_KEY}`;
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { userName } = body;
+  const { userId } = body;
   try {
     if (body) {
-      const characterName = userName;
+      const db = (await connectDB).db("donson");
+      const user = await db.collection("user").findOne({ userId: userId });
+      if (!user) {
+        throw new Error("사용자를 찾을 수 없습니다.");
+      }
+      const charName = user.charName;
+      console.log(charName);
+      const characterName = charName;
       const urlString =
-        "https://open.api.nexon.com/heroes/v1/id?character_name=" +
+        "https://open.api.nexon.com/maplestory/v1/id?character_name=" +
         characterName;
       const res = await fetch(urlString, {
         headers: {
@@ -26,9 +34,13 @@ export async function POST(req: NextRequest) {
       }
 
       const data = await res.json();
-      console.log("불러온 API 값", data);
+      console.log("불러온 API 값", data.ocid);
 
-      return NextResponse.json(data);
+      await db
+        .collection("user")
+        .updateOne({ userId: userId }, { $set: { oicd: data.ocid } });
+
+      return NextResponse.json(data.ocid);
     }
   } catch (error) {
     console.error("서버 에러입니다.", error);
