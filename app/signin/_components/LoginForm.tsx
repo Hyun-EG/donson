@@ -5,13 +5,13 @@ import React, { useState } from "react";
 
 const LoginForm = () => {
   const router = useRouter();
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
+  const [userId, setIUserId] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
   const handleLogin = async () => {
     const res = await fetch("/api/signin", {
       method: "POST",
-      body: JSON.stringify({ id, password }),
+      body: JSON.stringify({ userId, userPassword }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -29,9 +29,9 @@ const LoginForm = () => {
   return (
     <form className="flex flex-col gap-2">
       <input
-        value={id}
+        value={userId}
         onChange={(e) => {
-          setId(e.target.value);
+          setIUserId(e.target.value);
         }}
         onKeyDown={(e) => {
           e.key === "Enter" ? handleLogin() : null;
@@ -41,9 +41,9 @@ const LoginForm = () => {
         placeholder="아이디를 입력해주세요."
       />
       <input
-        value={password}
+        value={userPassword}
         onChange={(e) => {
-          setPassword(e.target.value);
+          setUserPassword(e.target.value);
         }}
         onKeyDown={(e) => {
           e.key === "Enter" ? handleLogin() : null;

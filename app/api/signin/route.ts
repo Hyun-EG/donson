@@ -5,11 +5,11 @@ import { signJWT } from "@/util/jwt";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { id, password } = body;
+  const { userId, userPassword } = body;
 
   const db = (await connectDB).db("donson");
 
-  if (!id || !password) {
+  if (!userId || !userPassword) {
     return NextResponse.json(
       { message: "모든 필드를 입력해주세요", status: 400 },
       { status: 400 }
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   }
 
   const user = await db.collection("user").findOne({
-    $or: [{ id }],
+    $or: [{ userId }],
   });
   if (!user) {
     return NextResponse.json(
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const isMatch = await bcrypt.compare(password, user.hashedPW);
+  const isMatch = await bcrypt.compare(userPassword, user.hashedPW);
 
   try {
     if (!isMatch) {
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    const token = signJWT({ id });
+    const token = signJWT({ userId });
     const res = NextResponse.json(
       { message: "로그인에 성공하였습니다.", status: 200 },
       { status: 200 }
