@@ -1,8 +1,13 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 const SECRET = process.env.JWT_SECRET!;
 
-export const signJWT = (payload: object) => {
+export interface MyJwtPayload extends JwtPayload {
+  userId: string;
+  userName?: string;
+}
+
+export const signJWT = (payload: MyJwtPayload) => {
   return jwt.sign(payload, SECRET, { expiresIn: "1h" });
 };
 
