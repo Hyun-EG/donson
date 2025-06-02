@@ -44,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${geistSans.variable} ${geistMono.variable} my-14`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} my-14 p-3`}>
         <Nav />
         {children}
       </body>
