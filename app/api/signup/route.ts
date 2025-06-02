@@ -3,21 +3,31 @@ import { connectDB } from "@/util/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const data = await req.formData();
-  const name = data.get("userName")?.toString() ?? null;
-  const email = data.get("userEmail")?.toString() ?? null;
-  const id = data.get("userId")?.toString() ?? null;
-  const password = data.get("userPassword")?.toString() ?? null;
-  const confirmPassword = data.get("confirmUserPassword")?.toString() ?? null;
+  const body = await req.json();
+  const {
+    userName,
+    userEmail,
+    userId,
+    charName,
+    userPassword,
+    confirmUserPassword,
+  } = body;
 
-  if (!name || !email || !id || !password || !confirmPassword) {
+  if (
+    !userName ||
+    !userEmail ||
+    !userId ||
+    !charName ||
+    !userPassword ||
+    !confirmUserPassword
+  ) {
     return NextResponse.json(
       { message: "모든 필드를 입력해주세요.", status: 400 },
       { status: 400 }
     );
   }
 
-  if (password !== confirmPassword) {
+  if (userPassword !== confirmUserPassword) {
     return NextResponse.json(
       { message: "비밀번호가 일치하지 않습니다.", status: 400 },
       { status: 400 }
@@ -25,12 +35,12 @@ export async function POST(req: NextRequest) {
   }
 
   const SALT_ROUNDS = 10;
-  const hashedPW = await bcrypt.hash(password, SALT_ROUNDS);
+  const hashedPW = await bcrypt.hash(userPassword, SALT_ROUNDS);
 
   try {
     const db = (await connectDB).db("donson");
     const existingUser = await db.collection("user").findOne({
-      $or: [{ id }, { email }, { name }],
+      $or: [{ userId }, { userEmail }, { userName }, { charName }],
     });
     if (existingUser) {
       return NextResponse.json(
@@ -39,9 +49,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await db
-      .collection("user")
-      .insertOne({ name, email, id, hashedPW, createAt: new Date() });
+    await db.collection("user").insertOne({
+      userName,
+      userEmail,
+      userId,
+      charName,
+      hashedPW,
+      createdAt: new Date(),
+    });
 
     return NextResponse.json(
       { message: "회원가입 성공", status: 200 },
