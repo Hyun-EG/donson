@@ -13,7 +13,7 @@ const Nav = () => {
     return null;
   }
   return (
-    <nav className="fixed top-0 left-0 w-full h-14 px-2 flex items-center border-b border-[#bebebe]">
+    <nav className="fixed top-0 left-0 w-full h-14 px-2 flex items-center border-b border-[#bebebe] bg-white">
       <ul className="flex items-center gap-4 text-sm">
         <Image
           onClick={() => {
@@ -28,7 +28,10 @@ const Nav = () => {
           <Link href="/info">캐릭터 정보</Link>
         </li>
         <li className="cursor-pointer">
-          <Link href="/notice">업데이트</Link>
+          <Link href="/notice">공지사항</Link>
+        </li>
+        <li className="cursor-pointer">
+          <Link href="/event">이벤트</Link>
         </li>
       </ul>
     </nav>
