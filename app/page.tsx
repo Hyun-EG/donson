@@ -1,23 +1,21 @@
-import { MyJwtPayload, verifyJWT } from "@/util/jwt";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import InfoBox from "./_components/InfoBox";
+import { getUserCookies } from "@/util/getUserCookie";
 
 const page = async () => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
-  const decoded = token ? (verifyJWT(token) as MyJwtPayload) : null;
-  const userId = decoded?.userId;
+  const result = await getUserCookies();
 
   try {
   } catch (error) {}
 
-  if (!decoded) {
+  if (!result) {
     redirect("/signin");
   }
+
+  const { userId } = result;
+
   return (
     <section>
-      Main page
       <InfoBox userId={userId!} />
     </section>
   );
