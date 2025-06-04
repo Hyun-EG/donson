@@ -3,16 +3,13 @@ import InfoBox from "./_components/InfoBox";
 import { getUserCookies } from "@/util/getUserCookie";
 
 const page = async () => {
-  const result = await getUserCookies();
+  const cookie = await getUserCookies();
 
-  try {
-  } catch (error) {}
-
-  if (!result) {
+  if (!cookie) {
     redirect("/signin");
   }
 
-  const { userId } = result;
+  const { userId } = cookie;
 
   return (
     <section>
