@@ -1,7 +1,6 @@
 "use client";
 
 import { charStatInfo } from "@/lib/api/charStatInfo";
-import { getUserCookies } from "@/util/getUserCookie";
 import { useEffect, useState } from "react";
 import { CharStat } from "./types";
 
