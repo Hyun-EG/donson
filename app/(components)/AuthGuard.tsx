@@ -9,13 +9,13 @@ const AuthGuard = () => {
       const res = await fetch("/api/auth/user");
       try {
         if (!res.ok) {
-          localStorage.removeItem("user-store");
           useUserStore.setState({ userId: "", ocid: "" });
+          localStorage.removeItem("user-store");
         }
       } catch (error) {
         console.error("로그인 유저 정보 확인 실패", error);
-        localStorage.removeItem("user-store");
         useUserStore.setState({ userId: "", ocid: "" });
+        localStorage.removeItem("user-store");
       }
     };
     checkAuth();
