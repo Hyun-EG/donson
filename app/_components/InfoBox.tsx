@@ -1,55 +1,32 @@
 "use client";
 import { useEffect, useState } from "react";
-import { addOcid, getCharOcid } from "@/lib/api/mainCharOcid";
 import { charBasicInfo } from "@/lib/api/charBasicInfo";
 import Image from "next/image";
+import useUserStore from "@/store/useUserStore";
 
 const InfoBox = ({ userId }: { userId: string }) => {
-  const [ocid, setOcid] = useState("");
+  const { ocid, setUserIdAndOcid } = useUserStore();
   const [charInfo, setCharInfo] = useState<CharInfo | null>(null);
 
   useEffect(() => {
-    const saveOcid = async () => {
-      try {
-        await addOcid(userId);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    saveOcid();
-  }, [userId]);
-
-  useEffect(() => {
-    const fetchOcid = async () => {
-      try {
-        const ocid = await getCharOcid(userId);
-        setOcid(ocid);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchOcid();
-  }, [userId]);
+    if (userId) {
+      setUserIdAndOcid(userId);
+    }
+  }, [userId, setUserIdAndOcid]);
 
   useEffect(() => {
     if (!ocid) return;
 
-    const getCharBasicInfo = async () => {
+    const fetchCharInfo = async () => {
       try {
         const res = await charBasicInfo({ ocid });
-        console.log(res);
         setCharInfo(res);
       } catch (error) {
-        console.error("캐릭터 정보를를 불러오지 못했습니다.", error);
+        console.error("캐릭터 기본 정보 가져오기 실패", error);
       }
     };
-    getCharBasicInfo();
+    fetchCharInfo();
   }, [ocid]);
-
-  useEffect(() => {
-    if (charInfo) console.log("최신 캐릭터 정보:", charInfo);
-    if (ocid) console.log("ocid:", ocid);
-  }, [charInfo, ocid]);
 
   return (
     <main className="flex flex-col items-center">
@@ -83,7 +60,7 @@ const InfoBox = ({ userId }: { userId: string }) => {
             레벨: <span className="font-bold">{charInfo?.character_level}</span>
           </p>
           <p>
-            길드:{" "}
+            길드:
             <span className="font-bold">{charInfo?.character_guild_name}</span>
           </p>
           <p>
