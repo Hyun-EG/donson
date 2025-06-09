@@ -69,10 +69,10 @@ const TotalStatBox = () => {
       </article>
       {isShowTotalStat
         ? stat?.final_stat.map((statItem, index) => (
-            <div className="px-3 flex gap-2" key={index}>
-              <span className="font-bold text-sm">{statItem.stat_name}</span>
-              <span className="font-bold text-sm">{statItem.stat_value}</span>
-            </div>
+            <aside className="px-3 flex gap-2" key={index}>
+              <p className="font-bold text-xs">{statItem.stat_name}</p>
+              <p className="font-bold text-xs">{statItem.stat_value}</p>
+            </aside>
           ))
         : null}
     </section>
