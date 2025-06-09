@@ -22,8 +22,9 @@ const SignIn = async () => {
         <LoginForm />
         <article className="py-4">
           <p className="text-center">
-            아직 회원이 아니신가요?
+            회원이 아니신가요?
             <Link href="/signup" className="text-sky-500">
+              {" "}
               회원가입 하러가기
             </Link>
           </p>
