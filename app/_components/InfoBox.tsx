@@ -76,9 +76,10 @@ const InfoBox = ({ userId }: { userId: string }) => {
         <div className="w-full flex items-center gap-2">
           <div className="w-[85%] h-4 py-1">
             <div
-              className={`w-[${Math.floor(
-                Number(charInfo?.character_exp_rate)
-              )}%] h-2 bg-green-300 rounded-r-xl`}
+              style={{
+                width: `${Math.floor(Number(charInfo?.character_exp_rate))}%`,
+              }}
+              className="h-2 bg-green-300 rounded-r-xl"
             />
           </div>
           <div className="w-[15%]">
