@@ -3,38 +3,12 @@
 import { charStatInfo } from "@/lib/api/charStatInfo";
 import { useEffect, useState } from "react";
 import { CharStat } from "./types";
+import useUserStore from "@/store/useUserStore";
 
 const TotalStatBox = () => {
-  const [ocid, setOcid] = useState(null);
+  const { ocid } = useUserStore();
   const [stat, setStat] = useState<CharStat | null>(null);
-  const [userId, setUserId] = useState("");
   const [isShowTotalStat, setIsShowTotalStat] = useState(false);
-
-  useEffect(() => {
-    const getUserId = async () => {
-      const cookie = await fetch("/api/auth/user");
-      const data = await cookie.json();
-      if (data.user?.userId) {
-        setUserId(data.user.userId);
-      }
-    };
-    getUserId();
-  }, []);
-
-  useEffect(() => {
-    const saveCharOcid = async () => {
-      if (!userId) return;
-
-      const res = await fetch("api/get-char-ocid", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
-      });
-      const data = await res.json();
-      setOcid(data.ocid);
-    };
-    saveCharOcid();
-  }, [userId]);
 
   useEffect(() => {
     const getCharStatInfo = async () => {
