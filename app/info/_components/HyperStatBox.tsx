@@ -7,6 +7,8 @@ const HyperStatBox = () => {
   const [ocid, setOcid] = useState("");
   const [userId, setUserId] = useState("");
   const [hyperStat, setHyperStat] = useState<HyperStat | null>(null);
+  const [isShowHyperStat, setIsShowHyperStat] = useState(false);
+
   useEffect(() => {
     const getUserId = async () => {
       const res = await fetch("/api/auth/user");
@@ -58,10 +60,24 @@ const HyperStatBox = () => {
 
   return (
     <section className="px-3 py-2 flex flex-col border-b border-black">
-      <article className="flex justify-between items-center">
+      <article
+        onClick={() => {
+          setIsShowHyperStat((prev) => (prev ? false : true));
+        }}
+        className="flex justify-between items-center"
+      >
         <h1 className="text-xl font-bold">하이퍼 스탯</h1>
         <span>▽</span>
       </article>
+      {isShowHyperStat
+        ? hyperStat?.hyper_stat_preset_1.map((item, index) => (
+            <aside key={index} className="flex gap-2 text-xs">
+              <p className="font-bold">{item.stat_type}</p>
+              <p>{item.stat_level}</p>
+              <p>{item.stat_increase === null ? "-" : item.stat_increase}</p>
+            </aside>
+          ))
+        : null}
     </section>
   );
 };
