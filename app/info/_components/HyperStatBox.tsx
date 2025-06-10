@@ -73,7 +73,7 @@ const HyperStatBox = () => {
         className="flex justify-between items-center"
       >
         <h1 className="text-xl font-bold">하이퍼 스탯</h1>
-        <span>▽</span>
+        <span>{isShowHyperStat ? "△" : "▽"}</span>
       </article>
       {isShowHyperStat
         ? hyperStat?.hyper_stat_preset_1.map((item, index) => (
