@@ -1,5 +1,4 @@
 "use client";
-import { charHyperStat } from "@/lib/api/charHyperStat";
 import { useEffect, useState } from "react";
 import { HyperStat } from "./types";
 
@@ -38,10 +37,19 @@ const HyperStatBox = () => {
 
   useEffect(() => {
     const getCharHyperStat = async () => {
-      if (!ocid) return null;
+      if (!ocid) throw new Error("OCID가 존재하지 않습니다.");
+
       try {
-        const res = await charHyperStat(ocid);
-        setHyperStat(res);
+        const res = await fetch("/api/get-char-hyper-stat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ocid }),
+        });
+
+        const data = await res.json();
+        setHyperStat(data);
       } catch (error) {
         console.error("하이퍼 스탯 정보 가져오기 실패:", error);
       }

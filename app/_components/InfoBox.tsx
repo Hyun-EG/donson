@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { charBasicInfo } from "@/lib/api/charBasicInfo";
 import Image from "next/image";
 import useUserStore from "@/store/useUserStore";
 
@@ -19,8 +18,15 @@ const InfoBox = ({ userId }: { userId: string }) => {
 
     const fetchCharInfo = async () => {
       try {
-        const res = await charBasicInfo({ ocid });
-        setCharInfo(res);
+        const res = await fetch("/api/get-char-basic-info", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ocid }),
+        });
+        const data = await res.json();
+        setCharInfo(data);
       } catch (error) {
         console.error("캐릭터 기본 정보 가져오기 실패", error);
       }

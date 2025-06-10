@@ -1,6 +1,5 @@
 "use client";
 
-import { charStatInfo } from "@/lib/api/charStatInfo";
 import { useEffect, useState } from "react";
 import { CharStat } from "./types";
 import useUserStore from "@/store/useUserStore";
@@ -15,10 +14,23 @@ const TotalStatBox = () => {
       if (!ocid) return;
 
       try {
-        const data = await charStatInfo(ocid);
+        const res = await fetch("/api/get-char-stat-info", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ocid }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error("응답값이 존재하지 않습니다.");
+        }
+
         setStat(data);
       } catch (error) {
-        console.error("스탯 정보 가져오기 실패:", error);
+        console.error("캐릭터 스탯 정보 가져오기 실패:", error);
       }
     };
 
@@ -26,10 +38,9 @@ const TotalStatBox = () => {
   }, [ocid]);
 
   useEffect(() => {
-    if (stat) {
-      console.log(stat);
-    }
+    console.log("종합능력치입니다.", stat);
   }, [stat]);
+
   return (
     <section className="w-full flex flex-col gap-2">
       <article
@@ -42,7 +53,7 @@ const TotalStatBox = () => {
         <p className="cursor-pointer">{isShowTotalStat ? "△" : "▽"}</p>
       </article>
       {isShowTotalStat
-        ? stat?.final_stat.map((statItem, index) => (
+        ? stat?.final_stat?.map((statItem, index) => (
             <aside className="px-3 flex gap-2" key={index}>
               <p className="font-bold text-xs">{statItem.stat_name}</p>
               <p className="font-bold text-xs">{statItem.stat_value}</p>
