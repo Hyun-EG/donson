@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
         hostname: "open.api.nexon.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "lwi.nexon.com",
+        pathname: "/**",
+      },
     ],
   },
 };
