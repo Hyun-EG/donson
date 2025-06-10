@@ -7,6 +7,7 @@ import { AbilityType } from "./types";
 const AbilityBox = () => {
   const { ocid } = useUserStore();
   const [abilities, setAbilities] = useState<AbilityType | null>(null);
+  const [isShowAbilities, setIsShowAbilities] = useState(false);
 
   useEffect(() => {
     const fetchAbility = async () => {
@@ -39,12 +40,23 @@ const AbilityBox = () => {
   }, [abilities]);
 
   return (
-    <section>
-      <article className="w-full h-12 px-3 flex justify-between items-center border-b border-black">
+    <section className="px-3 py-2 flex flex-col border-b border-black">
+      <article
+        onClick={() => {
+          setIsShowAbilities((prev) => (prev ? false : true));
+        }}
+        className="mb-2 flex justify-between items-center"
+      >
         <h1 className="text-xl font-bold">어빌리티</h1>
-        <span>▽</span>
+        <span>{isShowAbilities ? "△" : "▽"}</span>
       </article>
-      <aside></aside>
+      {isShowAbilities &&
+        abilities?.ability_info.map((item) => (
+          <aside key={item.ability_no} className="flex gap-2 text-xs">
+            <p>{item.ability_grade}</p>
+            <p className="font-bold">{item.ability_value}</p>
+          </aside>
+        ))}
     </section>
   );
 };

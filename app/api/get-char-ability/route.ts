@@ -10,7 +10,12 @@ export async function POST(req: NextRequest) {
       );
     }
     const res = await fetch(
-      `https://open.api.nexon.com/maplestory/v1/character/ability?ocid=${ocid}`
+      `https://open.api.nexon.com/maplestory/v1/character/ability?ocid=${ocid}`,
+      {
+        headers: {
+          "x-nxopen-api-key": process.env.NEXON_API_KEY!,
+        },
+      }
     );
     if (!res.ok) {
       return NextResponse.json(
