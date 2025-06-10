@@ -37,8 +37,6 @@ const HyperStatBox = () => {
 
   useEffect(() => {
     const getCharHyperStat = async () => {
-      if (!ocid) throw new Error("OCID가 존재하지 않습니다.");
-
       try {
         const res = await fetch("/api/get-char-hyper-stat", {
           method: "POST",
