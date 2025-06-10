@@ -1,4 +1,5 @@
 "use client";
+import LoadingSpinner from "@/app/(components)/LoadingSpinner";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -7,6 +8,8 @@ const NoticeEventBox = () => {
   const [noticesImgUrl, setNoticesImgUrl] = useState(null);
   const [selectedNoticeNo, setSelectedNoticeNo] = useState(0);
   const [isShowDetailNotice, setIsShowDetailNotice] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const fetchNoticeList = async () => {
       try {
@@ -50,6 +53,14 @@ const NoticeEventBox = () => {
   }, [selectedNoticeNo]);
 
   useEffect(() => {
+    if (!noticesImgUrl) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [noticesImgUrl]);
+
+  useEffect(() => {
     console.log("notice", notices);
     console.log("noticeDetail", notices?.event_notice);
   }, [notices]);
@@ -79,13 +90,19 @@ const NoticeEventBox = () => {
           {selectedNoticeNo === item.notice_id &&
             isShowDetailNotice === item.notice_id &&
             noticesImgUrl && (
-              <Image
-                src={noticesImgUrl}
-                alt="이벤트 이미지"
-                width={800}
-                height={200}
-                style={{ objectFit: "cover" }}
-              />
+              <div>
+                {isLoading ? (
+                  <LoadingSpinner />
+                ) : (
+                  <Image
+                    src={noticesImgUrl}
+                    alt="이벤트 이미지"
+                    width={800}
+                    height={200}
+                    style={{ objectFit: "cover" }}
+                  />
+                )}
+              </div>
             )}
         </div>
       ))}
