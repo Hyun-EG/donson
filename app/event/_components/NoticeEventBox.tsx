@@ -61,7 +61,7 @@ const NoticeEventBox = () => {
           <article
             onClick={() => {
               setSelectedNoticeNo(item.notice_id);
-              setIsShowDetailNotice(item.notice_id);
+              setIsShowDetailNotice((prev) => (prev ? 0 : item.notice_id));
             }}
             className="w-full h-16 flex flex-col justify-center border-b border-black"
           >
