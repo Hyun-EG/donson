@@ -8,7 +8,7 @@ const Notice = async () => {
   if (!cookie) {
     redirect("/signin");
   }
-  return <section>Notice page</section>;
+  return <main className="flex flex-col gap-2">공지사항</main>;
 };
 
 export default Notice;
