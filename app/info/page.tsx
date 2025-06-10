@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import TotalStatBox from "./_components/TotalStatBox";
 import HyperStatBox from "./_components/HyperStatBox";
+import AbilityBox from "./_components/AbilityBox";
 
 const Info = async () => {
   const cookie = await getUserCookies();
@@ -15,6 +16,7 @@ const Info = async () => {
       <article className="flex flex-col">
         <TotalStatBox />
         <HyperStatBox />
+        <AbilityBox />
       </article>
     </section>
   );
