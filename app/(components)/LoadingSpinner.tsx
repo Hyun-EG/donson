@@ -1,6 +1,6 @@
 const LoadingSpinner = () => {
   return (
-    <div role="status">
+    <div className="py-24" role="status">
       <svg
         aria-hidden="true"
         className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
