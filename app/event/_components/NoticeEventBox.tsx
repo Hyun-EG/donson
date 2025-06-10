@@ -60,7 +60,8 @@ const NoticeEventBox = () => {
         <div className="flex flex-col items-center" key={item.notice_id}>
           <article
             onClick={() => {
-              setSelectedNoticeNo(item.notice_id);
+              setNoticesImgUrl(null);
+              setSelectedNoticeNo((prev) => (prev ? 0 : item.notice_id));
               setIsShowDetailNotice((prev) => (prev ? 0 : item.notice_id));
             }}
             className="w-full h-16 flex flex-col justify-center border-b border-black"
@@ -69,8 +70,9 @@ const NoticeEventBox = () => {
               <p>
                 <span className="font-bold">{item.title}</span>
               </p>
-              <p>
-                URL: <span className="text-xs">{item.url}</span>
+              <p className="text-xs">
+                기간: <span>{item.date_event_start.split("T")[0]}</span> -{" "}
+                <span>{item.date_event_end.split("T")[0]}</span>
               </p>
             </aside>
           </article>
