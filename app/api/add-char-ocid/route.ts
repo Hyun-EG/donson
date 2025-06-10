@@ -1,7 +1,7 @@
 import { connectDB } from "@/util/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
-const API_KEY = `${process.env.NEXT_PUBLIC_NEXON_API_KEY}`;
+const API_KEY = `${process.env.NEXON_API_KEY}`;
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
