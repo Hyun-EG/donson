@@ -11,12 +11,65 @@ const Info = async () => {
     redirect("/signin");
   }
 
+  const { ocid } = cookie;
+
+  // 종합스탯
+  const resTotalStat = await fetch(
+    `https://open.api.nexon.com/maplestory/v1/character/stat?ocid=${ocid}`,
+    {
+      headers: {
+        "x-nxopen-api-key": process.env.NEXON_API_KEY!,
+      },
+    }
+  );
+
+  if (!resTotalStat.ok) {
+    console.log("캐릭터 종합 능력치 정보를 받지 못했습니다.");
+    return;
+  }
+
+  const totalStat = await resTotalStat.json();
+
+  // 하이퍼스탯
+  const resHyperStat = await fetch(
+    `https://open.api.nexon.com/maplestory/v1/character/hyper-stat?ocid=${ocid}`,
+    {
+      headers: {
+        "x-nxopen-api-key": process.env.NEXON_API_KEY!,
+      },
+    }
+  );
+
+  if (!resHyperStat.ok) {
+    console.log("캐릭터 하이퍼 능력치 정보를 받지 못했습니다.");
+    return;
+  }
+
+  const totalHyperStat = await resHyperStat.json();
+
+  // 어빌리티
+  const resAbility = await fetch(
+    `https://open.api.nexon.com/maplestory/v1/character/ability?ocid=${ocid}`,
+    {
+      headers: {
+        "x-nxopen-api-key": process.env.NEXON_API_KEY!,
+      },
+    }
+  );
+
+  if (!resAbility.ok) {
+    console.log("캐릭터 어빌리티 정보를 받지 못했습니다.");
+    return;
+  }
+
+  const ability = await resAbility.json();
+
   return (
     <section className="w-full flex flex-col ">
       <article className="flex flex-col">
-        <TotalStatBox />
-        <HyperStatBox />
-        <AbilityBox />
+        <TotalStatBox totalStat={totalStat} />
+        <HyperStatBox totalHyperStat={totalHyperStat} />
+        <AbilityBox ability={ability} />
       </article>
     </section>
   );

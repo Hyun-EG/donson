@@ -9,11 +9,22 @@ const page = async () => {
     redirect("/signin");
   }
 
-  const { userId } = cookie;
+  const { ocid } = cookie;
+
+  const res = await fetch(
+    `https://open.api.nexon.com/maplestory/v1/character/basic?ocid=${ocid}`,
+    {
+      headers: {
+        "x-nxopen-api-key": process.env.NEXON_API_KEY!,
+      },
+      next: { revalidate: 60 },
+    }
+  );
+  const charBasicInfo = await res.json();
 
   return (
     <section>
-      <InfoBox userId={userId!} />
+      <InfoBox charBasicInfo={charBasicInfo} />
     </section>
   );
 };
