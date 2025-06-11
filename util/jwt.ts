@@ -3,8 +3,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 const SECRET = process.env.JWT_SECRET!;
 
 export interface MyJwtPayload extends JwtPayload {
-  userId: string;
-  userName?: string;
+  ocid?: string;
 }
 
 export const signJWT = (payload: MyJwtPayload) => {
@@ -13,7 +12,7 @@ export const signJWT = (payload: MyJwtPayload) => {
 
 export const verifyJWT = (token: string) => {
   try {
-    return jwt.verify(token, SECRET);
+    return jwt.verify(token, SECRET) as MyJwtPayload;
   } catch (error) {
     return null;
   }
