@@ -41,18 +41,35 @@ const Info = async () => {
   );
 
   if (!resHyperStat.ok) {
-    console.log("캐릭터 종합 능력치 정보를 받지 못했습니다.");
+    console.log("캐릭터 하이퍼 능력치 정보를 받지 못했습니다.");
     return;
   }
 
   const totalHyperStat = await resHyperStat.json();
+
+  // 어빌리티
+  const resAbility = await fetch(
+    `https://open.api.nexon.com/maplestory/v1/character/ability?ocid=${ocid}`,
+    {
+      headers: {
+        "x-nxopen-api-key": process.env.NEXON_API_KEY!,
+      },
+    }
+  );
+
+  if (!resAbility.ok) {
+    console.log("캐릭터 어빌리티 정보를 받지 못했습니다.");
+    return;
+  }
+
+  const ability = await resAbility.json();
 
   return (
     <section className="w-full flex flex-col ">
       <article className="flex flex-col">
         <TotalStatBox totalStat={totalStat} />
         <HyperStatBox totalHyperStat={totalHyperStat} />
-        <AbilityBox />
+        <AbilityBox ability={ability} />
       </article>
     </section>
   );
