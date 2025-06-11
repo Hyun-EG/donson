@@ -6,14 +6,15 @@ export async function getUserCookies() {
   const token = (await cookieStore).get("token")?.value;
   const decoded = token ? (verifyJWT(token) as MyJwtPayload) : null;
 
-  if (!decoded) {
+  if (!token) {
     return null;
   }
 
-  const userId = decoded?.userId;
-  if (!userId) {
+  if (!decoded || !decoded.ocid) {
     return null;
   }
 
-  return { userId, decoded };
+  return {
+    ocid: decoded.ocid,
+  };
 }
