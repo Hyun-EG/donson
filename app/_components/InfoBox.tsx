@@ -1,14 +1,31 @@
 "use client";
 import Image from "next/image";
 import { useEffect } from "react";
+import { CharStat } from "../info/_components/types";
+import { formatKoreanNumber } from "@/util/formatKoreanNumber";
 
-const InfoBox = ({ charBasicInfo }: { charBasicInfo: CharInfo }) => {
+const InfoBox = ({
+  charBasicInfo,
+  totalStat,
+}: {
+  charBasicInfo: CharInfo;
+  totalStat: CharStat;
+}) => {
   const userCharName = charBasicInfo.character_name;
+  const battlePower = totalStat?.final_stat?.find((stat) =>
+    stat.stat_name.includes("전투력")
+  )?.stat_value;
+
   useEffect(() => {
     if (userCharName) {
       sessionStorage.setItem("userCharName", userCharName);
     }
   }, []);
+
+  useEffect(() => {
+    console.log("전투력은", battlePower);
+  }, [battlePower]);
+
   return (
     <main className="flex flex-col items-center">
       <section className="flex">
@@ -58,6 +75,16 @@ const InfoBox = ({ charBasicInfo }: { charBasicInfo: CharInfo }) => {
         </article>
       </section>
       <aside className="w-full flex flex-col justify-center">
+        <div className="w-full h-12 mt-4 flex justify-center items-center border rounded-lg">
+          <p>
+            <span>전투력 :</span>{" "}
+            <span className="font-bold text-xl">
+              {battlePower
+                ? `${formatKoreanNumber(Number(battlePower))}`
+                : "전투력 정보 없음"}
+            </span>
+          </p>
+        </div>
         <h1 className="text-sm font-bold">Exp</h1>
         <div className="w-full flex items-center gap-2">
           <div className="w-[85%] h-4 py-1">
