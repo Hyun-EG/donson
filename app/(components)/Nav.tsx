@@ -53,7 +53,9 @@ const Nav = () => {
       >
         <Image src={menu} alt="메뉴 아이콘" width={20} priority />
       </button>
-      {isShowMenu && <SubNav setIsShowMenu={setIsShowMenu} />}
+      {isShowMenu && (
+        <SubNav setIsShowMenu={setIsShowMenu} isAnimating={isShowMenu} />
+      )}
     </nav>
   );
 };

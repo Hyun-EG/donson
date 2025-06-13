@@ -5,8 +5,10 @@ import React, { useEffect, useState } from "react";
 
 const SubNav = ({
   setIsShowMenu,
+  isAnimating,
 }: {
   setIsShowMenu: (value: boolean) => void;
+  isAnimating: boolean;
 }) => {
   const router = useRouter();
   const [charName, setCharName] = useState<string | null>(null);
@@ -23,7 +25,11 @@ const SubNav = ({
     router.push("/signin");
   };
   return (
-    <section className="fixed right-0 top-0 w-36 min-h-screen pt-3 px-3 pb-24 flex flex-col justify-between border-l border-[#bebebe] rounded-tl-2xl bg-white">
+    <section
+      className={`fixed right-0 top-0 w-36 min-h-screen pt-3 px-3 pb-24 flex flex-col justify-between border-l border-[#bebebe] rounded-tl-2xl bg-white ${
+        isAnimating ? "animate-fadeOut" : ""
+      }`}
+    >
       <nav className="mt-4">
         <button
           onClick={() => {
