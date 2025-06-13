@@ -1,7 +1,14 @@
 "use client";
 import Image from "next/image";
+import { useEffect } from "react";
 
 const InfoBox = ({ charBasicInfo }: { charBasicInfo: CharInfo }) => {
+  const userCharName = charBasicInfo.character_name;
+  useEffect(() => {
+    if (userCharName) {
+      sessionStorage.setItem("userCharName", userCharName);
+    }
+  }, []);
   return (
     <main className="flex flex-col items-center">
       <section className="flex">
@@ -12,6 +19,8 @@ const InfoBox = ({ charBasicInfo }: { charBasicInfo: CharInfo }) => {
             alt="캐릭터 이미지"
             width={120}
             height={120}
+            quality={100}
+            priority
           />
         )}
         <article className="flex flex-col px-4">
