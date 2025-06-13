@@ -26,7 +26,7 @@ const SubNav = ({
   };
   return (
     <section
-      className={`fixed right-0 top-0 w-36 min-h-screen pt-3 px-3 pb-24 flex flex-col justify-between border-l border-[#bebebe] rounded-tl-2xl bg-white ${
+      className={`fixed right-0 top-0 w-36 min-h-screen pt-3 px-3 pb-28 flex flex-col justify-between border-l border-[#bebebe] rounded-tl-2xl bg-white ${
         isAnimating ? "animate-fadeOut" : ""
       }`}
     >
