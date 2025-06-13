@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const SubNav = ({
@@ -12,6 +13,7 @@ const SubNav = ({
 }) => {
   const router = useRouter();
   const [charName, setCharName] = useState<string | null>(null);
+  const pathName = usePathname();
 
   useEffect(() => {
     const charName = sessionStorage.getItem("userCharName");
@@ -26,27 +28,35 @@ const SubNav = ({
   };
   return (
     <section
-      className={`fixed right-0 top-0 w-36 min-h-screen pt-3 px-3 pb-40 flex flex-col justify-between border-l border-[#bebebe] rounded-tl-2xl bg-white ${
+      className={`fixed right-0 top-0 w-44 min-h-screen pt-3 px-3 pb-40 flex flex-col justify-between items-center border-l border-[#bebebe] rounded-tl-2xl bg-white ${
         isAnimating ? "animate-fadeOut" : ""
       }`}
     >
-      <nav className="mt-4">
+      <nav className="w-full mt-4">
         <button
           onClick={() => {
             setIsShowMenu(false);
           }}
-          className="w-10 h-10 mb-4 border border-black rounded-full  font-bold"
+          className="w-10 h-10 mb-4 border border-black rounded-full font-bold"
         >
           ✕
         </button>
         <p className="text-sm">
           <span className="text-sky-500 font-bold">{charName}</span> 님
         </p>
-        <ul className="mt-4 leading-loose">
-          <li>미개발</li>
-          <li>미개발</li>
-          <li>미개발</li>
-          <li>미개발</li>
+        <ul className="mt-4 flex flex-col justify-center gap-2">
+          <p className="mb-2 font-bold">Menu.</p>
+          <li className="border-b border-[#bebebe] text-sm">미개발</li>
+          <li className="border-b border-[#bebebe] text-sm">미개발</li>
+          <li className="border-b border-[#bebebe] text-sm">미개발</li>
+          <Link href="/weather">
+            <li
+              style={{ fontWeight: pathName === "/weather" ? "bold" : "" }}
+              className="border-b border-[#bebebe] text-sm"
+            >
+              오늘 피방갈 날씬가?
+            </li>
+          </Link>
         </ul>
       </nav>
       <button
