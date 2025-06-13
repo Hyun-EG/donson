@@ -11,7 +11,7 @@ const page = async () => {
 
   const { ocid } = cookie;
 
-  const res = await fetch(
+  const resCharBasicInfo = await fetch(
     `https://open.api.nexon.com/maplestory/v1/character/basic?ocid=${ocid}`,
     {
       headers: {
@@ -20,11 +20,22 @@ const page = async () => {
       next: { revalidate: 60 },
     }
   );
-  const charBasicInfo = await res.json();
+  const charBasicInfo = await resCharBasicInfo.json();
+
+  const resBattlePower = await fetch(
+    `https://open.api.nexon.com/maplestory/v1/character/stat?ocid=${ocid}`,
+    {
+      headers: {
+        "x-nxopen-api-key": process.env.NEXON_API_KEY!,
+      },
+    }
+  );
+
+  const totalStat = await resBattlePower.json();
 
   return (
     <section>
-      <InfoBox charBasicInfo={charBasicInfo} />
+      <InfoBox charBasicInfo={charBasicInfo} totalStat={totalStat} />
     </section>
   );
 };
