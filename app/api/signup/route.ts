@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { connectDB } from "@/util/mongodb";
 import { NextRequest, NextResponse } from "next/server";
+import { addCharOcidToUser } from "@/lib/addCharOcidToUser";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -57,6 +58,12 @@ export async function POST(req: NextRequest) {
       hashedPW,
       createdAt: new Date(),
     });
+
+    try {
+      await addCharOcidToUser(userId);
+    } catch (e) {
+      console.error("OCID 저장 실패", e);
+    }
 
     return NextResponse.json(
       { message: "회원가입 성공", status: 200 },
