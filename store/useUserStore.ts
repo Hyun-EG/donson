@@ -1,7 +1,7 @@
 // store/useUserStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { addOcid, getCharOcid } from "@/lib/api/mainCharOcid";
+import { getCharOcid } from "@/lib/api/mainCharOcid";
 
 type UserStore = {
   userId: string;
@@ -16,7 +16,6 @@ const useUserStore = create(
       ocid: "",
       setUserIdAndOcid: async (userId: string) => {
         try {
-          await addOcid(userId);
           const ocid = await getCharOcid(userId);
           set({ userId, ocid });
         } catch (err) {
@@ -25,7 +24,7 @@ const useUserStore = create(
       },
     }),
     {
-      name: "user-store", 
+      name: "user-store",
     }
   )
 );
