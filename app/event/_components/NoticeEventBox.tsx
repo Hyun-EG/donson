@@ -12,6 +12,7 @@ const NoticeEventBox = ({ eventList }: { eventList: NoticeListType }) => {
   useEffect(() => {
     if (selectedNoticeNo === 0) return;
     const fetchNoticeDetail = async () => {
+      setIsLoading(true);
       try {
         const res = await fetch("api/get-notice-event-detail", {
           method: "POST",
@@ -29,18 +30,12 @@ const NoticeEventBox = ({ eventList }: { eventList: NoticeListType }) => {
         setNoticesImgUrl(data);
       } catch (error) {
         console.error("올바른 이미지 url을 받아오지 못했습니다.", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchNoticeDetail();
   }, [selectedNoticeNo]);
-
-  useEffect(() => {
-    if (!noticesImgUrl) {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-    }
-  }, [noticesImgUrl]);
 
   return (
     <section>
@@ -65,12 +60,11 @@ const NoticeEventBox = ({ eventList }: { eventList: NoticeListType }) => {
             </aside>
           </article>
           {selectedNoticeNo === item.notice_id &&
-            isShowDetailNotice === item.notice_id &&
-            noticesImgUrl && (
+            isShowDetailNotice === item.notice_id && (
               <div>
                 {isLoading ? (
                   <LoadingSpinner />
-                ) : (
+                ) : noticesImgUrl ? (
                   <Image
                     src={noticesImgUrl}
                     alt="이벤트 이미지"
@@ -78,7 +72,7 @@ const NoticeEventBox = ({ eventList }: { eventList: NoticeListType }) => {
                     height={200}
                     style={{ objectFit: "cover" }}
                   />
-                )}
+                ) : null}
               </div>
             )}
         </div>
