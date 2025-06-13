@@ -27,13 +27,22 @@ const Nav = () => {
           alt="돈슨 로고"
           width={40}
         />
-        <li className="cursor-pointer">
+        <li
+          style={{ fontWeight: pathName === "/info" ? "bold" : "" }}
+          className="cursor-pointer"
+        >
           <Link href="/info">캐릭터 정보</Link>
         </li>
-        <li className="cursor-pointer">
+        <li
+          style={{ fontWeight: pathName === "/notice" ? "bold" : "" }}
+          className="cursor-pointer"
+        >
           <Link href="/notice">공지사항</Link>
         </li>
-        <li className="cursor-pointer">
+        <li
+          style={{ fontWeight: pathName === "/event" ? "bold" : "" }}
+          className="cursor-pointer"
+        >
           <Link href="/event">이벤트</Link>
         </li>
       </ul>
