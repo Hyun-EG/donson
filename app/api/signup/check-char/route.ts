@@ -4,7 +4,12 @@ export async function POST(req: NextRequest) {
   const { name } = await req.json();
   try {
     const res = await fetch(
-      `https://open.api.nexon.com/maplestory/v1/id?character_name=${name}`
+      `https://open.api.nexon.com/maplestory/v1/id?character_name=${name}`,
+      {
+        headers: {
+          "x-nxopen-api-key": process.env.NEXON_API_KEY!,
+        },
+      }
     );
     if (!res.ok) {
       return NextResponse.json(
