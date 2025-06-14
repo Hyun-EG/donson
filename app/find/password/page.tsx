@@ -1,7 +1,18 @@
 import Link from "next/link";
 import ResetPasswordBox from "./_components/ResetPasswordBox";
+import { cookies } from "next/headers";
+import { verifyJWT } from "@/util/jwt";
+import { redirect } from "next/navigation";
 
-const ResetPassword = () => {
+const ResetPassword = async () => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  const decoded = token ? verifyJWT(token) : null;
+
+  if (decoded) {
+    redirect("/");
+  }
+
   return (
     <section className="w-full h-full py-8 px-8 flex flex-col items-center">
       <header className="py-4">
