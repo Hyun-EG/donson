@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
     });
     if (existingUser) {
       return NextResponse.json(
-        { message: "이미 존재하는 사용자 정보입니다.", status: 409 },
+        { message: "이미 존재하는 아이디입니다.", status: 409 },
         { status: 409 }
       );
     }
