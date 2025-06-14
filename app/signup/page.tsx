@@ -14,7 +14,7 @@ const SignUp = async () => {
   }
 
   return (
-    <section className="w-full h-full px-8 flex flex-col items-center">
+    <section className="fixed top-0 left-0 w-full h-full p-8 flex flex-col items-center">
       <header className="py-4">
         <span className="text-3xl font-bold">DONSON</span>
       </header>
