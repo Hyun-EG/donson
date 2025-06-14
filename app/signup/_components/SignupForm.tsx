@@ -80,9 +80,15 @@ const SignupForm = () => {
           onChange={(e) => setUserEmail(e.target.value)}
         />
         <button className="w-[20%] h-10 bg-sky-500 text-white text-xs">
-          인증번호
-          <br />
-          받기
+          {resendStat ? (
+            "재전송"
+          ) : (
+            <>
+              인증번호
+              <br />
+              받기
+            </>
+          )}
         </button>
       </div>
       <div className="flex justify-between">
