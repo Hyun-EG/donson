@@ -3,7 +3,7 @@ import ResetPasswordBox from "./_components/ResetPasswordBox";
 
 const ResetPassword = () => {
   return (
-    <section className="w-full min-h-screen py-8 px-8 flex flex-col items-center">
+    <section className="w-full h-full py-8 px-8 flex flex-col items-center">
       <header className="py-4">
         <span className="text-3xl font-bold">DONSON</span>
       </header>
