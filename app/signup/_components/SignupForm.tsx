@@ -1,11 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SignupForm = () => {
   const router = useRouter();
 
+  // inputValue
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [certifyNo, setCertifyNo] = useState("");
@@ -13,8 +14,13 @@ const SignupForm = () => {
   const [charName, setCharName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [confirmUserPassword, setConfirmUserPassword] = useState("");
+
+  // buttonState
   const [resendStat, setResendStat] = useState(false);
   const [certifyDisabled, setCertifyDisabled] = useState(false);
+
+  const [charOcid, setCharOcid] = useState<string | null>(null);
+  const [charInfo, setCharInfo] = useState(null);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +66,36 @@ const SignupForm = () => {
     }
   };
 
+  const handleCheckChar = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const resCharOcid = await fetch("/api/signup/check-char", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: charName }),
+    });
+    const { ocid } = await resCharOcid.json();
+    setCharOcid(ocid);
+    console.log(charOcid);
+
+    const resCharInfo = await fetch("/api/signup/get-char-info", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ocid }),
+    });
+    const charInfo = await resCharInfo.json();
+    setCharInfo(charInfo);
+    console.log(charInfo);
+  };
+
+  useEffect(() => {
+    console.log("charOcid", charOcid);
+    console.log("charInfo", charInfo);
+  }, [charOcid, charInfo]);
+
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSignup}>
       <input
@@ -102,7 +138,7 @@ const SignupForm = () => {
           name="verify"
           value={certifyNo}
           className="w-[79%] h-10 px-2 border border-[#bebebe] bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none"
-          type="email"
+          type="text"
           placeholder="인증번호를 입력해주세요."
           onChange={(e) => setCertifyNo(e.target.value)}
         />
@@ -124,14 +160,25 @@ const SignupForm = () => {
         placeholder="아이디를 입력해주세요."
         onChange={(e) => setUserId(e.target.value)}
       />
-      <input
-        name="charName"
-        value={charName}
-        className="w-full h-10 px-2 border border-[#bebebe] bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none"
-        type="text"
-        placeholder="캐릭터 이름을 입력해주세요."
-        onChange={(e) => setCharName(e.target.value)}
-      />
+      <div className="flex justify-between">
+        <input
+          name="charName"
+          value={charName}
+          className="w-[79%] h-10 px-2 border border-[#bebebe] bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none"
+          type="text"
+          placeholder="캐릭터 이름을 입력해주세요."
+          onChange={(e) => setCharName(e.target.value)}
+        />
+        <button
+          type="button"
+          onClick={handleCheckChar}
+          className="w-[20%] h-10 bg-sky-500 text-white text-xs"
+        >
+          캐릭터
+          <br />
+          인증
+        </button>
+      </div>
       <input
         name="userPassword"
         value={userPassword}

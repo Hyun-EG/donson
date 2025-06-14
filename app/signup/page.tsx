@@ -12,6 +12,7 @@ const SignUp = async () => {
   if (decoded) {
     redirect("/");
   }
+
   return (
     <section className="w-full h-full px-8 flex flex-col items-center">
       <header className="py-4">
