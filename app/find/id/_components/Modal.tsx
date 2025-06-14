@@ -14,7 +14,7 @@ const Modal = ({
   useEffect(() => {
     if (foundUserId) {
       const masked =
-        foundUserId.slice(0, 3) + "*".repeat(foundUserId.length - 3);
+        foundUserId.slice(0, 4) + "*".repeat(foundUserId.length - 4);
       setSeqUserId(masked);
     }
   }, [foundUserId]);
