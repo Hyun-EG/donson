@@ -20,13 +20,22 @@ const SignIn = async () => {
       </header>
       <main className="w-full">
         <LoginForm />
-        <article className="py-4">
+        <article className="py-4 flex flex-col gap-2">
           <p className="text-center">
             회원이 아니신가요?
             <Link href="/signup" className="text-sky-500">
               {" "}
               회원가입 하러가기
             </Link>
+          </p>
+          <p className="text-center">
+            <span className="text-sky-500 cursor-pointer">
+              <Link href="/find/id">아이디 찾기</Link>
+            </span>{" "}
+            |{" "}
+            <span className="text-sky-500 cursor-pointer ">
+              <Link href="/find/password">비밀번호 찾기</Link>
+            </span>
           </p>
         </article>
       </main>
