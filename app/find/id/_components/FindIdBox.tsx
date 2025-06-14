@@ -1,17 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal";
 
 const FindIdBox = () => {
   const [nameInputValue, setNameInputValue] = useState("");
   const [emailInputValue, setEmailInputValue] = useState("");
+  const [foundUserId, setFoundUserId] = useState(null);
   const [isShowModal, setIsShowModal] = useState(false);
+
+  const handleFindId = async () => {
+    try {
+      if (!nameInputValue || !emailInputValue) {
+        alert("모든 입력 필드를 채워주세요.");
+        return;
+      }
+      const res = await fetch("/api/find-id", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nameInputValue, emailInputValue }),
+      });
+      console.log("res", res);
+      if (!res.ok) {
+        throw new Error("응답값이 존재하지 않습니다.");
+      }
+      const data = await res.json();
+      setFoundUserId(data);
+    } catch (error) {
+      console.error("서버 에러", error);
+    }
+  };
+
+  useEffect(() => {
+    if (foundUserId) {
+      setIsShowModal(true);
+    }
+  }, [foundUserId]);
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setIsShowModal(true);
+        handleFindId();
       }}
       className="w-full flex flex-col gap-2"
     >
@@ -37,7 +69,11 @@ const FindIdBox = () => {
         아이디 찾기
       </button>
       {isShowModal && (
-        <Modal idValue="테스트" setIsShowModal={setIsShowModal} />
+        <Modal
+          idValue="테스트"
+          setIsShowModal={setIsShowModal}
+          foundUserId={foundUserId}
+        />
       )}
     </form>
   );
