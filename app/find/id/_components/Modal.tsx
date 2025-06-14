@@ -3,9 +3,11 @@
 const Modal = ({
   idValue,
   setIsShowModal,
+  foundUserId,
 }: {
   idValue: string;
   setIsShowModal: (value: boolean) => void;
+  foundUserId: string | null;
 }) => {
   return (
     <section className="fixed top-0 left-0 w-full min-h-screen flex justify-center items-center bg-black/50 z-50">
@@ -20,9 +22,10 @@ const Modal = ({
           ✕
         </button>
         <p className="text-lg">
-          찾으신 아이디는 <span className="font-bold">{idValue}</span> 입니다.
+          찾으신 아이디는 <span className="font-bold">{foundUserId}</span>{" "}
+          입니다.
         </p>
-        <p className="text-2xl text-sky-500 font-bold">{idValue}</p>
+        <p className="text-2xl text-sky-500 font-bold">{foundUserId}</p>
       </main>
     </section>
   );
