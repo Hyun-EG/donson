@@ -71,11 +71,7 @@ const FindIdBox = () => {
         아이디 찾기
       </button>
       {isShowModal && (
-        <Modal
-          idValue="테스트"
-          setIsShowModal={setIsShowModal}
-          foundUserId={foundUserId}
-        />
+        <Modal setIsShowModal={setIsShowModal} foundUserId={foundUserId} />
       )}
     </form>
   );
