@@ -27,18 +27,18 @@ const SignIn = async () => {
             회원이 아니신가요?
             <Link
               href="/signup"
-              className="p-1 text-sky-500 bg-black rounded-lg"
+              className="p-1 ml-2 text-sky-500 bg-[#363636] rounded-lg"
             >
               {" "}
               회원가입 하러가기
             </Link>
           </p>
           <p className="text-center">
-            <span className="p-1 text-sky-500 bg-black rounded-lg">
+            <span className="p-1 text-sky-500 bg-[#363636] rounded-lg">
               <Link href="/find/id">아이디 찾기</Link>
             </span>{" "}
             |{" "}
-            <span className="p-1 text-sky-500 bg-black rounded-lg ">
+            <span className="p-1 text-sky-500 bg-[#363636] rounded-lg ">
               <Link href="/find/password">비밀번호 찾기</Link>
             </span>
           </p>
