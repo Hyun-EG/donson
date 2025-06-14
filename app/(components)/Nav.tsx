@@ -12,7 +12,12 @@ const Nav = () => {
   const router = useRouter();
   const pathName = usePathname();
   const [isShowMenu, setIsShowMenu] = useState(false);
-  if (pathName === "/signin" || pathName === "/signup") {
+  if (
+    pathName === "/signin" ||
+    pathName === "/signup" ||
+    pathName === "/find/id" ||
+    pathName === "/find/password"
+  ) {
     return null;
   }
   return (
