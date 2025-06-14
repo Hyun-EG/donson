@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingOverlay from "@/app/(components)/LoadingOverlay";
 import {
   matchCertifyNumber,
   sendCertifyNumber,
@@ -20,12 +21,14 @@ const ResetPasswordBox = () => {
   const [resetPassword, setResetPassword] = useState("");
   const [resetConfirmPassword, setResetConfirmPassword] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [isShowResetPasswordInput, setIsShowResetPasswordInput] =
     useState(false);
 
   const handlePostCertifyNo = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const res = await sendCertifyNumber(userEmail);
       if (res.ok) {
@@ -34,6 +37,8 @@ const ResetPasswordBox = () => {
       }
     } catch (error) {
       console.error("인증번호 전송 실패:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -96,6 +101,7 @@ const ResetPasswordBox = () => {
 
   return (
     <form className="w-full flex flex-col gap-2">
+      {isLoading && <LoadingOverlay />}
       {isShowResetPasswordInput ? (
         <>
           <input
