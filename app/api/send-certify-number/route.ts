@@ -18,6 +18,15 @@ export async function POST(req: NextRequest) {
     .collection("certify")
     .createIndex({ createdAt: 1 }, { expireAfterSeconds: 300 });
 
+  const existing = await db.collection("certify").findOne({ userEmail: to });
+
+  if (existing) {
+    return NextResponse.json(
+      { message: "이미 인증번호가 전송되었습니다. 잠시 후 다시 시도해주세요." },
+      { status: 400 }
+    );
+  }
+
   await db.collection("certify").insertOne({
     userEmail: to,
     certifyNo: seqCertifyNo,

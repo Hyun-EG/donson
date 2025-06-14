@@ -9,6 +9,7 @@ import {
   matchCertifyNumber,
   sendCertifyNumber,
 } from "@/service/certifyService";
+import LoadingOverlay from "@/app/(components)/LoadingOverlay";
 
 const SignupForm = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const SignupForm = () => {
   // buttonState
   const [sendCertifyDisabled, setSendCertifyDisabled] = useState(false);
   const [matchCertifyDisabled, setMatchCertifyDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [charOcid, setCharOcid] = useState<string | null>(null);
   const [charInfo, setCharInfo] = useState(null);
@@ -70,6 +72,7 @@ const SignupForm = () => {
       const result = await res.json();
 
       if (res.ok) {
+        alert("회원가입에 성공하였습니다.");
         router.push("/signin");
       } else {
         alert(result.message || "회원가입에 실패했습니다.");
@@ -82,6 +85,9 @@ const SignupForm = () => {
 
   const handlePostCertifyNo = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!userEmail) return alert("이메일을 입력해주세요.");
+
+    setIsLoading(true);
     try {
       const res = await sendCertifyNumber(userEmail);
       if (res.ok) {
@@ -90,6 +96,9 @@ const SignupForm = () => {
       }
     } catch (error) {
       console.error("인증번호 전송 실패:", error);
+      alert("서버 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -147,6 +156,7 @@ const SignupForm = () => {
 
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSignup}>
+      {isLoading && <LoadingOverlay />}
       {isShowModal && (
         <Modal setIsShowModal={setIsShowModal} charInfo={charInfo} />
       )}
