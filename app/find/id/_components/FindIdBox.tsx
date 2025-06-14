@@ -44,6 +44,8 @@ const FindIdBox = () => {
       onSubmit={(e) => {
         e.preventDefault();
         handleFindId();
+        setNameInputValue("");
+        setEmailInputValue("");
       }}
       className="w-full flex flex-col gap-2"
     >
