@@ -3,6 +3,12 @@ module.exports = {
   content: ["./app/**/*.tsx"],
   theme: {
     extend: {
+      screens: {
+        sm500: "500px",
+      },
+      backgroundImage: {
+        "ren-pattern": "url('/bg/donson-login-bg.webp')",
+      },
       keyframes: {
         fadeOut: {
           "0%": {
