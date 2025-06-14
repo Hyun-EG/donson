@@ -1,8 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "./Modal";
+import { validateSignupInput } from "@/util/validateSignupInput";
+import { getCharInfo, getCharOcid } from "@/service/checkCharService";
+import {
+  matchCertifyNumber,
+  sendCertifyNumber,
+} from "@/service/certifyService";
 
 const SignupForm = () => {
   const router = useRouter();
@@ -17,8 +23,8 @@ const SignupForm = () => {
   const [confirmUserPassword, setConfirmUserPassword] = useState("");
 
   // buttonState
-  const [resendStat, setResendStat] = useState(false);
-  const [certifyDisabled, setCertifyDisabled] = useState(false);
+  const [sendCertifyDisabled, setSendCertifyDisabled] = useState(false);
+  const [matchCertifyDisabled, setMatchCertifyDisabled] = useState(false);
 
   const [charOcid, setCharOcid] = useState<string | null>(null);
   const [charInfo, setCharInfo] = useState(null);
@@ -29,15 +35,18 @@ const SignupForm = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      !userName ||
-      !userEmail ||
-      !userId ||
-      !charName ||
-      !userPassword ||
-      !confirmUserPassword
-    ) {
-      alert("모든 항목을 입력해주세요.");
+    const errorMessage = validateSignupInput({
+      userName,
+      userEmail,
+      certifyNo,
+      userId,
+      charName,
+      userPassword,
+      confirmUserPassword,
+    });
+
+    if (errorMessage) {
+      alert(errorMessage);
       return;
     }
 
@@ -50,6 +59,7 @@ const SignupForm = () => {
         body: JSON.stringify({
           userName,
           userEmail,
+          certifyNo,
           userId,
           charName,
           userPassword,
@@ -70,26 +80,45 @@ const SignupForm = () => {
     }
   };
 
+  const handlePostCertifyNo = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await sendCertifyNumber(userEmail);
+      if (res.ok) {
+        setSendCertifyDisabled(true);
+        alert("인증번호 전송에 성공하였습니다.");
+      }
+    } catch (error) {
+      console.error("인증번호 전송 실패:", error);
+    }
+  };
+
+  const handleMatchCertifyNo = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await matchCertifyNumber(userEmail, certifyNo);
+      if (res.ok) {
+        setMatchCertifyDisabled(true);
+        alert("인증번호 확인에 성공하였습니다.");
+      }
+    } catch (error) {
+      console.error("인증번호 인증 실패:", error);
+      alert("서버 오류가 발생했습니다.");
+    }
+  };
+
   const handleCheckChar = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!charName) {
       alert("캐릭터 이름을 입력해주세요.");
       return;
     }
 
     try {
-      const resCharOcid = await fetch("/api/signup/check-char", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: charName }),
-      });
-
+      const resCharOcid = await getCharOcid(charName);
       if (!resCharOcid.ok) {
-        const errorData = await resCharOcid.json();
-        alert(errorData.message || "캐릭터를 찾을 수 없습니다.");
+        const err = await resCharOcid.json();
+        alert(err.message || "캐릭터를 찾을 수 없습니다.");
         return;
       }
 
@@ -98,36 +127,23 @@ const SignupForm = () => {
         alert("유효하지 않은 캐릭터입니다.");
         return;
       }
-
       setCharOcid(ocid);
 
-      const resCharInfo = await fetch("/api/signup/get-char-info", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ocid }),
-      });
-
+      const resCharInfo = await getCharInfo(ocid);
       if (!resCharInfo.ok) {
-        const errorData = await resCharInfo.json();
-        alert(errorData.message || "캐릭터 정보를 불러올 수 없습니다.");
+        const err = await resCharInfo.json();
+        alert(err.message || "캐릭터 정보를 불러올 수 없습니다.");
         return;
       }
 
-      const charInfo = await resCharInfo.json();
-      setCharInfo(charInfo);
+      const info = await resCharInfo.json();
+      setCharInfo(info);
       setIsShowModal(true);
     } catch (err) {
       console.error("캐릭터 확인 중 오류:", err);
       alert("오류가 발생했습니다.");
     }
   };
-
-  useEffect(() => {
-    console.log("charOcid", charOcid);
-    console.log("charInfo", charInfo);
-  }, [charOcid, charInfo]);
 
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSignup}>
@@ -150,23 +166,21 @@ const SignupForm = () => {
           type="email"
           placeholder="이메일을 입력해주세요."
           onChange={(e) => setUserEmail(e.target.value)}
+          disabled={sendCertifyDisabled}
         />
         <button
-          onClick={() => {
-            setCertifyDisabled(true);
-            setResendStat(true);
+          type="button"
+          onClick={(e) => {
+            handlePostCertifyNo(e);
           }}
-          className="w-[20%] h-10 bg-sky-500 text-white text-xs"
+          className={`w-[20%] h-10 ${
+            sendCertifyDisabled ? "bg-[#bebebe]" : "bg-sky-500"
+          } text-white text-xs`}
+          disabled={sendCertifyDisabled}
         >
-          {resendStat ? (
-            "재전송"
-          ) : (
-            <>
-              인증번호
-              <br />
-              받기
-            </>
-          )}
+          인증번호
+          <br />
+          받기
         </button>
       </div>
       <div className="flex justify-between">
@@ -177,13 +191,18 @@ const SignupForm = () => {
           type="text"
           placeholder="인증번호를 입력해주세요."
           onChange={(e) => setCertifyNo(e.target.value)}
+          disabled={matchCertifyDisabled}
         />
         <button
+          type="button"
           className={`
       w-[20%] h-10 ${
-        certifyDisabled ? "bg-[#bebebe]" : "bg-sky-500"
+        matchCertifyDisabled ? "bg-[#bebebe]" : "bg-sky-500"
       } text-white text-xs`}
-          disabled={certifyDisabled}
+          disabled={matchCertifyDisabled}
+          onClick={(e) => {
+            handleMatchCertifyNo(e);
+          }}
         >
           인증하기
         </button>
