@@ -8,10 +8,12 @@ const SignupForm = () => {
 
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [verifyNo, setVerifyNo] = useState("");
   const [userId, setUserId] = useState("");
   const [charName, setCharName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [confirmUserPassword, setConfirmUserPassword] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,6 +77,23 @@ const SignupForm = () => {
         placeholder="이메일을 입력해주세요."
         onChange={(e) => setUserEmail(e.target.value)}
       />
+      <div className="flex justify-between">
+        <input
+          name="verify"
+          value={verifyNo}
+          className="w-[79%] h-10 px-2 border border-[#bebebe] bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none"
+          type="email"
+          placeholder="인증번호를 입력해주세요."
+          onChange={(e) => setVerifyNo(e.target.value)}
+        />
+        <button
+          className={`
+      w-[20%] h-10 ${disabled ? "bg-[#bebebe]" : "bg-sky-500"} text-white`}
+          disabled={disabled}
+        >
+          인증
+        </button>
+      </div>
       <input
         name="userId"
         value={userId}
