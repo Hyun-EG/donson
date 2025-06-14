@@ -79,7 +79,13 @@ const SignupForm = () => {
           placeholder="이메일을 입력해주세요."
           onChange={(e) => setUserEmail(e.target.value)}
         />
-        <button className="w-[20%] h-10 bg-sky-500 text-white text-xs">
+        <button
+          onClick={() => {
+            setCertifyDisabled(true);
+            setResendStat(true);
+          }}
+          className="w-[20%] h-10 bg-sky-500 text-white text-xs"
+        >
           {resendStat ? (
             "재전송"
           ) : (
