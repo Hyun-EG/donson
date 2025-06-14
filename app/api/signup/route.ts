@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
   const {
     userName,
     userEmail,
+    certifyNo,
     userId,
     charName,
     userPassword,
@@ -17,6 +18,7 @@ export async function POST(req: NextRequest) {
   if (
     !userName ||
     !userEmail ||
+    !certifyNo ||
     !userId ||
     !charName ||
     !userPassword ||
@@ -40,8 +42,23 @@ export async function POST(req: NextRequest) {
 
   try {
     const db = (await connectDB).db("donson");
+    const cert = await db.collection("certify").findOne({
+      userEmail,
+      certifyNo,
+    });
+
+    if (cert?.certifyNo !== certifyNo) {
+      return NextResponse.json(
+        {
+          message: "인증 번호가 일치하지 않습니다.",
+          status: 400,
+        },
+        { status: 400 }
+      );
+    }
+
     const existingUser = await db.collection("user").findOne({
-      $or: [{ userId }, { userEmail }, { userName }, { charName }],
+      $or: [{ userId }],
     });
     if (existingUser) {
       return NextResponse.json(
@@ -58,6 +75,8 @@ export async function POST(req: NextRequest) {
       hashedPW,
       createdAt: new Date(),
     });
+
+    await db.collection("certify").deleteOne({ _id: cert?._id });
 
     try {
       await addCharOcidToUser(userId);

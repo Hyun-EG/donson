@@ -1,4 +1,4 @@
-type CharInfo = {
+export type CharInfo = {
   character_image?: string;
   character_name?: string;
   character_level?: number;

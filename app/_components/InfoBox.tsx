@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { CharStat } from "../info/_components/types";
 import { formatKoreanNumber } from "@/util/formatKoreanNumber";
+import { CharInfo } from "./types";
 
 const InfoBox = ({
   charBasicInfo,
