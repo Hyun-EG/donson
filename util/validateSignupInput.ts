@@ -42,5 +42,21 @@ export function validateSignupInput({
     return "비밀번호가 일치하지 않습니다.";
   }
 
+  const nameRegex = /^(?:[가-힣]{1,20}|[a-zA-Z]{1,20})$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const userIdRegex = /^[a-z0-9]{6,12}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,20}$/;
+
+  if (!nameRegex.test(userName)) return "성함을 확인해주세요.";
+
+  if (!emailRegex.test(userEmail)) return "유효한 이메일 형식이 아닙니다.";
+
+  if (!userIdRegex.test(userId))
+    return "아이디는 영어 소문자, 숫자만 사용하며 6~12자여야 합니다.";
+
+  if (!passwordRegex.test(userPassword))
+    return "비밀번호는 소문자, 숫자, 특수문자를 포함해 8~20자여야 합니다.";
+
   return null;
 }
