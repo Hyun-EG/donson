@@ -7,13 +7,13 @@ export function validateSignupInput({
   userPassword,
   confirmUserPassword,
 }: {
-  userName: string;
-  userEmail: string;
-  certifyNo: string;
-  userId: string;
-  charName: string;
-  userPassword: string;
-  confirmUserPassword: string;
+  userName?: string;
+  userEmail?: string;
+  certifyNo?: string;
+  userId?: string;
+  charName?: string;
+  userPassword?: string;
+  confirmUserPassword?: string;
 }): string | null {
   if (!userName) {
     return "성함을 입력해주세요.";
