@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import logo from "@/public/icons/icon-logo.png";
+import logo from "@/public/icons/icon-nav-logo.svg";
 import menu from "@/public/icons/icon-menu.svg";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
@@ -27,10 +27,11 @@ const Nav = () => {
           onClick={() => {
             router.push("/");
           }}
-          className="cursor-pointer"
+          className="border border-[#bebebe] rounded-full cursor-pointer"
           src={logo}
           alt="돈슨 로고"
           width={40}
+          priority
         />
         <li
           style={{ fontWeight: pathName === "/info" ? "bold" : "" }}
