@@ -34,11 +34,11 @@ const SignIn = async () => {
             </Link>
           </p>
           <p className="text-center">
-            <span className="p-1 text-sky-500 bg-[#363636] rounded-lg">
+            <span className="p-1 text-white bg-[#363636] rounded-lg">
               <Link href="/find/id">아이디 찾기</Link>
             </span>{" "}
             |{" "}
-            <span className="p-1 text-sky-500 bg-[#363636] rounded-lg ">
+            <span className="p-1 text-white bg-[#363636] rounded-lg ">
               <Link href="/find/password">비밀번호 찾기</Link>
             </span>
           </p>
