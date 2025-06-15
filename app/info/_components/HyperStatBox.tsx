@@ -6,14 +6,14 @@ const HyperStatBox = ({ totalHyperStat }: { totalHyperStat: HyperStat }) => {
   const [isShowHyperStat, setIsShowHyperStat] = useState(false);
 
   return (
-    <section className="px-3 py-2 flex flex-col border-b border-black">
+    <section className="px-3 py-2 flex flex-col border-b border-[#bebebe]">
       <article
         onClick={() => {
           setIsShowHyperStat((prev) => (prev ? false : true));
         }}
         className="flex justify-between items-center"
       >
-        <h1 className="text-xl font-bold">하이퍼 스탯</h1>
+        <h1 className="font-bold">하이퍼 스탯</h1>
         <span>{isShowHyperStat ? "△" : "▽"}</span>
       </article>
       {isShowHyperStat
