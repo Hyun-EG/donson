@@ -51,7 +51,7 @@ const NoticeEventBox = ({ eventList }: { eventList: NoticeListType }) => {
           >
             <aside>
               <p>
-                <span className="font-bold">{item.title}</span>
+                <span className="text-sm font-bold">{item.title}</span>
               </p>
               <p className="text-xs">
                 기간: <span>{item.date_event_start.split("T")[0]}</span> -{" "}
