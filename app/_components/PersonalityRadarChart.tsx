@@ -25,7 +25,14 @@ const PersonalityRadarChart = ({
 }: {
   propensity: PersonalityRadarChartProps;
 }) => {
-  const labels = ["카리스마", "감성", "통찰력", "의지", "손재주", "매력"];
+  const labels = [
+    `카리스마 ${propensity?.charisma_level}`,
+    `감성 ${propensity?.sensibility_level}`,
+    `통찰력 ${propensity?.insight_level}`,
+    `의지 ${propensity?.willingness_level}`,
+    `손재주 ${propensity?.handicraft_level}`,
+    `매력 ${propensity?.charm_level}`,
+  ];
 
   useEffect(() => {
     console.log(propensity);
