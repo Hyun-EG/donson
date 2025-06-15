@@ -22,7 +22,7 @@ const Nav = () => {
   }
   return (
     <nav className="fixed top-0 left-0 w-full h-14 px-3 flex justify-between items-center border-b border-[#bebebe] bg-white">
-      <ul className="flex items-center gap-4 text-sm">
+      <ul className="flex items-center gap-4 text-xs">
         <Image
           onClick={() => {
             router.push("/");
@@ -30,7 +30,7 @@ const Nav = () => {
           className="border border-[#bebebe] rounded-full cursor-pointer"
           src={logo}
           alt="돈슨 로고"
-          width={40}
+          width={30}
           priority
         />
         <li
@@ -51,6 +51,17 @@ const Nav = () => {
         >
           <Link href="/event">이벤트</Link>
         </li>
+        <div className="relative">
+          <li
+            style={{ fontWeight: pathName === "/cash" ? "bold" : "" }}
+            className="cursor-pointer"
+          >
+            <Link href="/cash">캐시샵 공지</Link>
+          </li>
+          <span className="absolute top-0 right-0 translate-x-2/3 -translate-y-2/3 w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
+            N
+          </span>
+        </div>
       </ul>
       <button
         onClick={() => {
