@@ -34,15 +34,10 @@ const PersonalityRadarChart = ({
     `매력 ${propensity?.charm_level}`,
   ];
 
-  useEffect(() => {
-    console.log(propensity);
-  }, [propensity]);
-
   const chartData = {
     labels,
     datasets: [
       {
-        label: "성향 수치",
         data: [
           propensity?.charisma_level,
           propensity?.sensibility_level,
