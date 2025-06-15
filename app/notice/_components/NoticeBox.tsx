@@ -39,7 +39,7 @@ const NoticeBox = () => {
               key={item.notice_id}
               className="w-full py-2 flex flex-col border-b border-black"
             >
-              <p className="font-bold">{item.title}</p>
+              <p className="text-sm font-bold">{item.title}</p>
               <p className="text-sm">ID : {item.notice_id}</p>
               <p className="text-sm">{item.date.split("T")[0]}</p>
               <p className="text-xs">{item.url}</p>
