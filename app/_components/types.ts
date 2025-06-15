@@ -8,3 +8,12 @@ export type CharInfo = {
   character_exp_rate?: string;
   liberation_quest_clear_flag: string;
 };
+
+export interface PersonalityRadarChartProps {
+  charisma_level: number;
+  sensibility_level: number;
+  insight_level: number;
+  willingness_level: number;
+  handicraft_level: number;
+  charm_level: number;
+}
