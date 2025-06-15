@@ -30,7 +30,9 @@ const AbilityBox = ({ ability }: { ability: AbilityType }) => {
                     ? "bg-[#A4C700]"
                     : item.ability_grade === "유니크"
                     ? "bg-[#E89C00]"
-                    : "bg-[#bebebe]"
+                    : item.ability_grade === "에픽"
+                    ? "bg-[#7F66D3]"
+                    : "bg-[#36B8D0]"
                 }`}
               >
                 <p className="text-white font-bold">{item.ability_value}</p>

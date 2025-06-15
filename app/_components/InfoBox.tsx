@@ -3,14 +3,17 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { CharStat } from "../info/_components/types";
 import { formatKoreanNumber } from "@/util/formatKoreanNumber";
-import { CharInfo } from "./types";
+import { CharInfo, PersonalityRadarChartProps } from "./types";
+import PersonalityRadarChart from "./PersonalityRadarChart";
 
 const InfoBox = ({
   charBasicInfo,
   totalStat,
+  propensity,
 }: {
   charBasicInfo: CharInfo;
   totalStat: CharStat;
+  propensity: PersonalityRadarChartProps;
 }) => {
   const userCharName = charBasicInfo.character_name;
   const battlePower = totalStat?.final_stat?.find((stat) =>
@@ -109,6 +112,11 @@ const InfoBox = ({
           </div>
           <div className="w-[15%]">
             <p className="text-sm">{charBasicInfo?.character_exp_rate}%</p>
+          </div>
+        </div>
+        <div className="flex justify-center items-center">
+          <div className="w-64 h-64">
+            <PersonalityRadarChart propensity={propensity} />
           </div>
         </div>
       </aside>
