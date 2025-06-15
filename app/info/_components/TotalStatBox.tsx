@@ -9,12 +9,12 @@ const TotalStatBox = ({ totalStat }: { totalStat: CharStat }) => {
   return (
     <section className="w-full flex flex-col gap-2">
       <article
-        className="flex items-center justify-between px-3 py-2 border-b border-black"
+        className="flex items-center justify-between px-3 py-2 border-b border-[#bebebe]"
         onClick={() => {
           setIsShowTotalStat((prev) => (prev ? false : true));
         }}
       >
-        <p className="text-xl font-bold">종합 능력치</p>
+        <p className="font-bold">종합 능력치</p>
         <p className="cursor-pointer">{isShowTotalStat ? "△" : "▽"}</p>
       </article>
       {isShowTotalStat
