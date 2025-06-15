@@ -33,9 +33,24 @@ const page = async () => {
 
   const totalStat = await resBattlePower.json();
 
+  const resPropensity = await fetch(
+    `https://open.api.nexon.com/maplestory/v1/character/propensity?ocid=${ocid}`,
+    {
+      headers: {
+        "x-nxopen-api-key": process.env.NEXON_API_KEY!,
+      },
+    }
+  );
+
+  const propensity = await await resPropensity.json();
+
   return (
     <section>
-      <InfoBox charBasicInfo={charBasicInfo} totalStat={totalStat} />
+      <InfoBox
+        charBasicInfo={charBasicInfo}
+        totalStat={totalStat}
+        propensity={propensity}
+      />
     </section>
   );
 };
