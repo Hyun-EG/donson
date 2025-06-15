@@ -33,7 +33,7 @@ const AbilityBox = ({ ability }: { ability: AbilityType }) => {
                     : "bg-[#bebebe]"
                 }`}
               >
-                <p className="font-bold">{item.ability_value}</p>
+                <p className="text-white font-bold">{item.ability_value}</p>
               </div>
             </div>
           </aside>
