@@ -45,16 +45,37 @@ const SubNav = ({
           <span className="text-sky-500 font-bold">{charName}</span> 님
         </p>
         <ul className="mt-4 flex flex-col justify-center gap-2">
-          <p className="mb-2 font-bold">Menu.</p>
-          <li className="border-b border-[#bebebe] text-sm">미개발</li>
-          <li className="border-b border-[#bebebe] text-sm">미개발</li>
-          <li className="border-b border-[#bebebe] text-sm">미개발</li>
+          <p className="mb-2 border-b border-[#bebebe] font-bold">Menu.</p>
+          <Link href="/mepo">
+            <li
+              style={{ fontWeight: pathName === "/mepo" ? "bold" : "" }}
+              className="text-center text-sm"
+            >
+              메포시세
+            </li>
+          </Link>
           <Link href="/weather">
             <li
               style={{ fontWeight: pathName === "/weather" ? "bold" : "" }}
-              className="border-b border-[#bebebe] text-sm"
+              className="text-center text-sm"
             >
               오늘 피방갈 날씬가?
+            </li>
+          </Link>
+          <Link href="/contact">
+            <li
+              style={{ fontWeight: pathName === "/contact" ? "bold" : "" }}
+              className="text-center text-sm"
+            >
+              고객문의
+            </li>
+          </Link>
+          <Link href="mypage">
+            <li
+              style={{ fontWeight: pathName === "/mypage" ? "bold" : "" }}
+              className="text-center text-sm"
+            >
+              마이페이지
             </li>
           </Link>
         </ul>
