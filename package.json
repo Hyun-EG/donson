@@ -1,6 +1,6 @@
 {
   "name": "DONSON",
-  "version": "0.5.5",
+  "version": "0.6.1",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -11,7 +11,7 @@
   "dependencies": {
     "autoprefixer": "^10.4.21",
     "bcrypt": "^6.0.0",
-    "chart.js": "^4.4.9",
+    "chart.js": "^4.5.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.16.0",
     "next": "15.3.3",
