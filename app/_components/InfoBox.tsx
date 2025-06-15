@@ -32,7 +32,7 @@ const InfoBox = ({
       <section className="flex">
         {charBasicInfo?.character_image && (
           <Image
-            className="border rounded-xl"
+            className="w-36 h-36 border border-[#bebebe] rounded-full bg-white "
             src={charBasicInfo?.character_image}
             alt="캐릭터 이미지"
             width={120}
@@ -41,33 +41,42 @@ const InfoBox = ({
             priority
           />
         )}
-        <article className="flex flex-col px-4">
-          <p>
-            월드: <span className="font-bold">{charBasicInfo?.world_name}</span>
-          </p>
-          <p>
+        <article className="flex flex-col justify-center px-4">
+          <div className="flex gap-1 text-sm text-white">
+            <span className="px-1 font-bold bg-sky-500 rounded-[6px]">
+              {charBasicInfo?.world_name}
+            </span>
+          </div>
+          <p className="text-sm">
             용사:{" "}
-            <span className="font-bold">{charBasicInfo?.character_name}</span>님
+            <span className="font-bold">{charBasicInfo?.character_name}</span>{" "}
+            님
           </p>
-          <p>
+          <p className="text-sm">
+            <span className="font-bold">{totalStat?.character_class} |</span>
+            <span className="font-bold">
+              {" "}
+              {charBasicInfo?.character_level} |{" "}
+            </span>
+            <span className="font-bold">
+              {charBasicInfo?.character_exp_rate}%
+            </span>
+          </p>
+          <p className="text-sm">
             해방 여부:
-            <span>
+            <span className="font-bold">
               {charBasicInfo?.liberation_quest_clear_flag === "true"
                 ? "해방 완료"
                 : "해방도 못했네"}
             </span>
           </p>
-          <p>
-            레벨:{" "}
-            <span className="font-bold">{charBasicInfo?.character_level}</span>
-          </p>
-          <p>
+          <p className="text-sm">
             길드:
             <span className="font-bold">
               {charBasicInfo?.character_guild_name}
             </span>
           </p>
-          <p>
+          <p className="text-sm">
             생성 날짜:
             <span className="font-bold">
               {charBasicInfo?.character_date_create?.split("T")[0]}
