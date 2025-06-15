@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AbilityType } from "./types";
 
 const AbilityBox = ({ ability }: { ability: AbilityType }) => {
-  const [isShowAbilities, setIsShowAbilities] = useState(false);
+  const [isShowAbilities, setIsShowAbilities] = useState(true);
 
   return (
     <section className="px-3 py-2 flex flex-col border-b border-[#bebebe]">
@@ -33,7 +33,7 @@ const AbilityBox = ({ ability }: { ability: AbilityType }) => {
                     : "bg-[#bebebe]"
                 }`}
               >
-                <p className="font-bold">{item.ability_value}</p>
+                <p className="text-white font-bold">{item.ability_value}</p>
               </div>
             </div>
           </aside>
