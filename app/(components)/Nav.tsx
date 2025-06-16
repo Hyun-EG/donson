@@ -17,6 +17,8 @@ const Nav = () => {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
+    if (!userId) return;
+
     const verifyAdmin = async () => {
       const res = await fetch("/api/verify-admin", {
         method: "POST",
@@ -26,10 +28,14 @@ const Nav = () => {
         body: JSON.stringify({ userId }),
       });
       const result = await res.json();
-      setIsAdmin(result);
+      setIsAdmin(res.ok && result === true);
     };
     verifyAdmin();
-  }, []);
+  }, [userId]);
+
+  useEffect(() => {
+    console.log(userId);
+  }, [userId]);
 
   if (
     pathName === "/signin" ||
