@@ -11,6 +11,7 @@ const Footer = () => {
       </p>
       <p className="font-bold text-sm">Data based on NEXON Open API</p>
       <p className="text-sm">
+        contact |<span className="font-bold"> codiee@naver.com </span>
         Version <span className="font-bold">{version}</span>
       </p>
     </section>
