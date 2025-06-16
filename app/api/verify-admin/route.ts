@@ -19,16 +19,5 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!user.admin) {
-    return NextResponse.json(false);
-  }
-
-  if (user.admin) {
-    return NextResponse.json(true);
-  }
-
-  return NextResponse.json(
-    { message: "접근 권한이 없습니다.", status: 401 },
-    { status: 401 }
-  );
+  return NextResponse.json(!!user.admin);
 }
