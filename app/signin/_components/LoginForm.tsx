@@ -3,12 +3,15 @@
 import LoadingOverlay from "@/app/(components)/LoadingOverlay";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import useUserStore from "@/store/useUserStore";
 
 const LoginForm = () => {
   const router = useRouter();
   const [userId, setIUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const { setUserIdAndOcid } = useUserStore();
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -24,6 +27,7 @@ const LoginForm = () => {
       const result = await res.json();
 
       if (res.ok) {
+        await setUserIdAndOcid(userId);
         router.push("/");
       } else {
         alert(result.message);
