@@ -26,6 +26,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const userName = user.userName;
+  const charName = user.charName;
+  const userEmail = user.userEmail;
   const ocid = user.ocid;
   const isMatch = await bcrypt.compare(userPassword, user.hashedPW);
 
@@ -36,7 +39,7 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    const token = signJWT({ userId, ocid });
+    const token = signJWT({ userName, charName, userEmail, userId, ocid });
     const res = NextResponse.json(
       { message: "로그인에 성공하였습니다.", status: 200 },
       { status: 200 }
