@@ -15,8 +15,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "사용자 없음" }, { status: 404 });
     }
 
-    console.log("유저 정보:", user);
-
     if (!user.ocid) {
       return NextResponse.json(
         { message: "OCID가 등록되지 않았습니다." },
