@@ -8,9 +8,11 @@ import LoadingOverlay from "./LoadingOverlay";
 const SubNav = ({
   setIsShowMenu,
   isAnimating,
+  isAdmin,
 }: {
   setIsShowMenu: (value: boolean) => void;
   isAnimating: boolean;
+  isAdmin: boolean | null;
 }) => {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
@@ -117,11 +119,25 @@ const SubNav = ({
                 마이페이지
               </li>
             </Link>
+            {isAdmin && (
+              <Link href="admin">
+                <li
+                  style={{ fontWeight: pathName === "/admin" ? "bold" : "" }}
+                  className="text-center text-sm"
+                  onClick={() => {
+                    setIsShowMenu(false);
+                  }}
+                >
+                  관리자
+                </li>
+              </Link>
+            )}
           </ul>
         </nav>
         <button
           onClick={() => {
             handleLogOut();
+            setIsShowMenu(false);
           }}
           className="w-20 px-2 py-1 mt-1 flex justify-center border border-black rounded-lg text-start font-bold"
         >

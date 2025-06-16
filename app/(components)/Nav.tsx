@@ -1,17 +1,42 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "@/public/icons/icon-nav-logo.svg";
 import menu from "@/public/icons/icon-menu.svg";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import SubNav from "./SubNav";
+import useUserStore from "@/store/useUserStore";
 
 const Nav = () => {
   const router = useRouter();
   const pathName = usePathname();
   const [isShowMenu, setIsShowMenu] = useState(false);
+  const { userId } = useUserStore();
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const verifyAdmin = async () => {
+      const res = await fetch("/api/verify-admin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
+      const result = await res.json();
+      setIsAdmin(res.ok && result === true);
+    };
+    verifyAdmin();
+  }, [userId]);
+
+  useEffect(() => {
+    console.log(userId);
+  }, [userId]);
+
   if (
     pathName === "/signin" ||
     pathName === "/signup" ||
@@ -20,6 +45,7 @@ const Nav = () => {
   ) {
     return null;
   }
+
   return (
     <nav className="fixed top-0 left-0 w-full h-14 px-3 flex justify-between items-center border-b border-[#bebebe] bg-white">
       <ul className="flex items-center gap-4 text-xs">
@@ -71,7 +97,11 @@ const Nav = () => {
         <Image src={menu} alt="메뉴 아이콘" width={20} priority />
       </button>
       {isShowMenu && (
-        <SubNav setIsShowMenu={setIsShowMenu} isAnimating={isShowMenu} />
+        <SubNav
+          setIsShowMenu={setIsShowMenu}
+          isAnimating={isShowMenu}
+          isAdmin={isAdmin}
+        />
       )}
     </nav>
   );

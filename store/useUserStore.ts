@@ -4,16 +4,16 @@ import { persist } from "zustand/middleware";
 import { getCharOcid } from "@/lib/api/mainCharOcid";
 
 type UserStore = {
-  userId: string;
-  ocid: string;
+  userId: string | null;
+  ocid: string | null;
   setUserIdAndOcid: (userId: string) => Promise<void>;
 };
 
 const useUserStore = create(
   persist<UserStore>(
     (set) => ({
-      userId: "",
-      ocid: "",
+      userId: null,
+      ocid: null,
       setUserIdAndOcid: async (userId: string) => {
         try {
           const ocid = await getCharOcid(userId);
