@@ -167,7 +167,7 @@ const MyPageBox = () => {
               }}
             />
             <input
-              className="w-[80%] h-8 px-2 text-sm border border-[#bebebe] bg-[#dbdbdb] focus:ring-2 focus:ring-sky-500 focus:outline-none"
+              className="w-[80%] h-8 px-2 text-sm border border-[#bebebe] bg-[#dbdbdb] focus:ring-2 focus:ring-sky-500 focus:outline-none z-[-1]"
               type="text"
               disabled={true}
               value={userIdInput}
