@@ -55,7 +55,7 @@ const SubNav = ({
       {isLoading && <LoadingOverlay />}
       <section
         ref={menuRef}
-        className={`fixed right-0 top-0 w-44 min-h-screen pt-3 px-3 pb-40 flex flex-col justify-between items-center border-l border-[#bebebe] rounded-tl-2xl bg-white ${
+        className={`fixed right-0 top-0 w-44 min-h-screen pt-3 px-3 pb-40 flex flex-col justify-between items-center border-l border-[#bebebe] rounded-tl-2xl bg-white z-2 ${
           isAnimating ? "animate-fadeOut" : ""
         }`}
       >
