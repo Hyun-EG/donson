@@ -31,7 +31,7 @@ const Mepo = async () => {
         <p>메포 시세는 넥슨 Open API 미제공으로 매일 수동 등록됩니다.</p>
         <p>등록시작일시 : 2025-06-17</p>
       </aside>
-      <main className="relative w-full h-52 mt-4 z-0">
+      <main className="w-full h-52 mt-4 overflow-hidden">
         <MepoGraph data={mepoPrice} />
       </main>
       <MepoStatBox data={mepoPrice} />

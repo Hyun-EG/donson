@@ -56,6 +56,17 @@ const MaplePointChart = ({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    plugins: {
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          label: (context: any) => `가격: ${context.raw.toLocaleString()} 메포`,
+        },
+      },
+      legend: {
+        display: true,
+      },
+    },
     scales: {
       x: {
         type: "time",
