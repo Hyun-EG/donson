@@ -15,28 +15,35 @@ const Pagination = ({
   const VIEW_DATA = 3;
   const [curPage, setCurPage] = useState(1);
 
+  const isPrevDisabled = curPage <= 1 || curTotalPage === 0;
+  const isNextDisabled = curPage >= curTotalPage || curTotalPage === 0;
+
   useEffect(() => {
     const startIdx = (curPage - 1) * VIEW_DATA;
     const endIdx = startIdx + VIEW_DATA;
     onPageChange(startIdx, endIdx);
   }, [curPage, allContacts]);
 
+  useEffect(() => {
+    if (curPage > curTotalPage && curTotalPage > 0) {
+      setCurPage(curTotalPage);
+    }
+  }, [curTotalPage]);
+
   return (
     <>
       <button
-        className={`${curPage === 1 ? "text-[#bebebe]" : ""} text-sm`}
+        className={`${isPrevDisabled ? "text-[#bebebe]" : ""} text-sm`}
         onClick={() => setCurPage((prev) => Math.max(prev - 1, 1))}
-        disabled={curPage === 1}
+        disabled={isPrevDisabled}
       >
         이전
       </button>
       <span>{curPage}</span>
       <button
-        className={`${
-          curPage === curTotalPage ? "text-[#bebebe]" : ""
-        } text-sm`}
+        className={`${isNextDisabled ? "text-[#bebebe]" : ""} text-sm`}
         onClick={() => setCurPage((prev) => Math.min(prev + 1, curTotalPage))}
-        disabled={curPage === curTotalPage}
+        disabled={isNextDisabled}
       >
         다음
       </button>
