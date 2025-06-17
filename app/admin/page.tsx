@@ -1,6 +1,6 @@
 import { connectDB } from "@/util/mongodb";
-import InquiryDetailsBox from "./_components/InquiryDetailsBox";
 import { Contact } from "./_components/types";
+import AdminBox from "./_components/AdminBox";
 
 const Admin = async () => {
   const db = (await connectDB).db("donson");
@@ -16,7 +16,7 @@ const Admin = async () => {
   return (
     <section>
       <h1 className="text-lg text-center font-bold">관리자 메뉴</h1>
-      <InquiryDetailsBox contacts={contact} />
+      <AdminBox contacts={contact} />
     </section>
   );
 };
