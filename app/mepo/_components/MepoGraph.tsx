@@ -46,6 +46,9 @@ const MaplePointChart = ({
         fill: false,
         borderColor: "rgb(75, 192, 192)",
         tension: 0.2,
+        pointRadius: 5,
+        pointHitRadius: 20,
+        pointHoverRadius: 6,
       },
     ],
   };
