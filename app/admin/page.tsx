@@ -2,8 +2,15 @@ import { connectDB } from "@/util/mongodb";
 import { Contact } from "./_components/types";
 import AdminBox from "./_components/AdminBox";
 import MaplePointPriceForm from "./_components/MaplePointPriceForm";
+import { getUserCookies } from "@/util/getUserCookie";
+import { redirect } from "next/navigation";
 
 const Admin = async () => {
+  const cookie = await getUserCookies();
+  if (!cookie) {
+    redirect("/signin");
+  }
+
   const db = (await connectDB).db("donson");
   const rawContact = await db.collection("contact").find().toArray();
 
