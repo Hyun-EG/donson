@@ -46,15 +46,23 @@ const MepoStatBox = ({ data }: { data: MepoPrice[] }) => {
       <h2 className="text-center font-bold">메포 통계</h2>
       <article className="p-10 flex justify-between">
         <aside className="p-4 border rounded-lg">
-          <h3 className="text-center font-bold">저번달</h3>
-          <p className="text-sm">최고가: {lastMonthStats.max ?? "-"}</p>
-          <p className="text-sm">최저가: {lastMonthStats.min ?? "-"}</p>
+          <h3 className="text-center text-[#bebebe] font-bold">저번달</h3>
+          <p className="text-sm text-red-500">
+            최고가: {lastMonthStats.max ?? "-"}
+          </p>
+          <p className="text-sm text-blue-500">
+            최저가: {lastMonthStats.min ?? "-"}
+          </p>
         </aside>
 
         <aside className="p-4 border rounded-lg">
           <h3 className="text-center font-bold">이번달</h3>
-          <p className="text-sm">최고가: {thisMonthStats.max ?? "-"}</p>
-          <p className="text-sm">최저가: {thisMonthStats.min ?? "-"}</p>
+          <p className="text-sm text-red-500">
+            최고가: {thisMonthStats.max ?? "-"}
+          </p>
+          <p className="text-sm text-blue-500">
+            최저가: {thisMonthStats.min ?? "-"}
+          </p>
         </aside>
       </article>
     </section>
