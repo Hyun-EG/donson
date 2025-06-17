@@ -7,6 +7,7 @@ const Admin = async () => {
   const rawContact = await db.collection("contact").find().toArray();
 
   const contact: Contact[] = rawContact.map((doc) => ({
+    _id: doc._id.toString(),
     userId: doc.userId,
     category: doc.category,
     content: doc.content,
