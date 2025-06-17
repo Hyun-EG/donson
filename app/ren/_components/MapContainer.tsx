@@ -23,10 +23,10 @@ const MapBox = ({
       <p className="text-center text-sm font-bold ">
         <span>{start}</span>~<span>{end}</span> {name}
       </p>
-      <div className="relative w-full h-32 my-2 rounded overflow-hidden z-[-1]">
+      <div className="relative w-full h-40 my-2 rounded overflow-hidden z-[-1]">
         <Image
           quality={90}
-          className="object-cover"
+          className="object-contain"
           fill
           src={src}
           alt={name}
