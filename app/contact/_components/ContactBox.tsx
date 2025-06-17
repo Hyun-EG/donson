@@ -1,33 +1,56 @@
 "use client";
 
+import LoadingOverlay from "@/app/(components)/LoadingOverlay";
 import { useState } from "react";
 
 const ContactBox = ({ userId }: { userId: string }) => {
   const [category, setCategory] = useState("계정/로그인 관련");
   const [content, setContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleContact = async () => {
-    const res = await fetch("/api/send-contact-us", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: userId,
-        category: category,
-        content: content,
-      }),
-    });
-    if (!res.ok) {
-      alert("문의내역 전송중 오류가 발생했습니다.");
+    if (isSubmitting) return;
+
+    if (content.trim() === "") {
+      alert("문의 내용을 입력해주세요.");
       return;
     }
-    alert("문의내역 전송에 성공하였습니다.");
-    setContent("");
+
+    setIsLoading(true);
+    try {
+      setIsSubmitting(true);
+
+      const res = await fetch("/api/send-contact-us", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          category: category,
+          content: content,
+        }),
+      });
+      if (!res.ok) {
+        alert("문의내역 전송중 오류가 발생했습니다.");
+        return;
+      }
+      alert("문의내역 전송에 성공하였습니다.");
+
+      setTimeout(() => setIsSubmitting(false), 3000);
+      setContent("");
+      setIsSubmitting(false);
+    } catch (error) {
+      console.error("문의내역 전송 중 에러가 발생했습니다.", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <section className="mt-4">
+      {isLoading && <LoadingOverlay />}
       <form>
         <label className="text-xs">
           ㅇ 해당 문의에 대한 답변은 평균{" "}
@@ -53,7 +76,7 @@ const ContactBox = ({ userId }: { userId: string }) => {
           className="w-full h-40 p-1 border border-[#bebebe] bg-white rounded-lg outline-0 resize-none"
           name="contact-content"
           id="content"
-          placeholder="문의 내역을 입력해주세요."
+          placeholder="문의 내용을 입력해주세요."
           value={content}
           onChange={(e) => {
             setContent(e.target.value);
@@ -63,10 +86,11 @@ const ContactBox = ({ userId }: { userId: string }) => {
           onClick={() => {
             handleContact();
           }}
+          disabled={isSubmitting}
           className="w-full h-8 bg-sky-500 text-white text-center"
           type="button"
         >
-          제출하기
+          {isSubmitting ? "전송 중" : "제출하기"}
         </button>
       </form>
     </section>
