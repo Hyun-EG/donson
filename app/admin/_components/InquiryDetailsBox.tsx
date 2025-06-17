@@ -56,9 +56,14 @@ const InquiryDetailsBox = ({ contacts }: { contacts: Contact[] }) => {
   };
 
   return (
-    <section className="w-full h-80 mt-4 flex flex-col justify-between border-b">
+    <section className="w-full h-full mt-4 flex flex-col justify-between border-b">
       <div>
-        <h1 className="font-bold">용사님들의 문의내역</h1>
+        <h1 className="text-center font-bold">용사님들의 문의내역</h1>
+        {displayedContacts.length === 0 && (
+          <article className="mt-4">
+            <p className="text-center">등록된 문의글이 없습니다.</p>
+          </article>
+        )}
         {isLoading && <LoadingOverlay />}
         {displayedContacts.map((contact, index) => (
           <article key={index} className="flex flex-col p-2 border-b">
@@ -68,7 +73,10 @@ const InquiryDetailsBox = ({ contacts }: { contacts: Contact[] }) => {
               }}
             >
               <header className="flex justify-between">
-                <p>카테고리: {contact.category}</p>
+                <p className="text-sm">
+                  카테고리:{" "}
+                  <span className="font-bold">{contact.category}</span>
+                </p>
                 <button
                   onClick={(e) => {
                     handleRemoveContact(e, contact._id);
@@ -80,15 +88,17 @@ const InquiryDetailsBox = ({ contacts }: { contacts: Contact[] }) => {
                 </button>
               </header>
               <div className="pr-5 flex justify-between items-center">
-                <p>유저 ID: {contact.userId}</p>
+                <p className="text-sm">
+                  유저 ID: <span className="font-bold">{contact.userId}</span>
+                </p>
                 <span className="text-xs">
                   {selectedIdx === contact._id ? "△" : "▽"}
                 </span>
               </div>
             </div>
             {selectedIdx === contact._id && (
-              <main className="px-1 py-2 bg-[#bebebe] rounded-lg">
-                <p>내용: {contact.content}</p>
+              <main className="px-1 py-2 mt-2 bg-[#bebebe] rounded-lg">
+                <p className="text-sm">내용 : {contact.content}</p>
               </main>
             )}
           </article>
