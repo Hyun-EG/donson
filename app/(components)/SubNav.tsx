@@ -114,7 +114,7 @@ const SubNav = ({
                     setIsShowMenu(false);
                   }}
                 >
-                  렌 고효율 육성
+                  렌 사냥터|빌드
                 </li>
               </div>
             </Link>
