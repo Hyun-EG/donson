@@ -150,7 +150,7 @@ const RenBox = () => {
         exp="8,556"
       />
       <MapContainer
-        src="/images/mapleMap/264-266.webp"
+        src="/images/mapleMap/266-268.webp"
         name="무법자들이 지배하는 황야4"
         start={266}
         end={268}
