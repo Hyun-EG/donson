@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import InfoBox from "./_components/InfoBox";
 import { getUserCookies } from "@/util/getUserCookie";
+import { connectDB } from "@/util/mongodb";
 
 const page = async () => {
   const cookie = await getUserCookies();
@@ -9,7 +10,13 @@ const page = async () => {
     redirect("/signin");
   }
 
-  const { ocid } = cookie;
+  const userId = await cookie?.userId;
+
+  const db = (await connectDB).db("donson");
+  const target = await db.collection("user").findOne({ userId });
+  const ocid = target?.ocid;
+
+  console.log("cookie", cookie);
 
   const resCharBasicInfo = await fetch(
     `https://open.api.nexon.com/maplestory/v1/character/basic?ocid=${ocid}`,
@@ -42,7 +49,7 @@ const page = async () => {
     }
   );
 
-  const propensity = await await resPropensity.json();
+  const propensity = await resPropensity.json();
 
   return (
     <section>
