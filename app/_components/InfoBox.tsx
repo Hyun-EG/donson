@@ -6,6 +6,7 @@ import { formatKoreanNumber } from "@/util/formatKoreanNumber";
 import { CharInfo, PersonalityRadarChartProps } from "./types";
 import PersonalityRadarChart from "./PersonalityRadarChart";
 import LoadingOverlay from "../(components)/LoadingOverlay";
+import { useRouter } from "next/navigation";
 
 const InfoBox = ({
   charBasicInfo,
@@ -18,6 +19,7 @@ const InfoBox = ({
 }) => {
   const userCharName = charBasicInfo.character_name;
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const battlePower = totalStat?.final_stat?.find((stat) =>
     stat.stat_name.includes("전투력")
@@ -28,6 +30,17 @@ const InfoBox = ({
       sessionStorage.setItem("userCharName", userCharName);
     }
   }, []);
+
+  useEffect(() => {
+    if (charBasicInfo?.character_image) {
+      setIsLoading(false);
+    }
+  }, [charBasicInfo]);
+
+  const refreshData = () => {
+    setIsLoading(true);
+    router.refresh();
+  };
 
   return (
     <>
@@ -51,6 +64,15 @@ const InfoBox = ({
               <span className="px-1 font-bold bg-sky-500 rounded-[6px]">
                 {charBasicInfo?.world_name}
               </span>
+              <button
+                onClick={() => {
+                  refreshData();
+                }}
+                disabled={isLoading}
+                className="px-1 font-bold bg-gray-500 rounded-[6px]"
+              >
+                {isLoading ? "갱신 중" : "정보갱신"}
+              </button>
             </div>
             <p className="text-sm">
               용사:{" "}
