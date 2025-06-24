@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 
 const VideoSplashComponent = () => {
-  return (
-    <section className="w-full min-h-screen bg-ren-video bg-cover bg-center" />
-  );
+  return <section className="w-full h-96 bg-ren-video bg-cover bg-center" />;
 };
 
 const SplashVideo = () => {
