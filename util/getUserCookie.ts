@@ -10,12 +10,13 @@ export async function getUserCookies() {
     return null;
   }
 
-  if (!decoded || !decoded.ocid || !decoded.userId) {
+  if (!decoded || !decoded.ocid || !decoded.userId || !decoded.charName) {
     return null;
   }
 
   return {
     ocid: decoded.ocid,
     userId: decoded.userId,
+    charName: decoded.charName,
   };
 }
