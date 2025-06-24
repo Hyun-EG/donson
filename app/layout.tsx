@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "./(components)/Nav";
 import Footer from "./(components)/Footer";
 import AuthGuard from "./(components)/AuthGuard";
+import SplashVideo from "./(components)/SplashVideo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +48,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} my-14 p-3`}>
+        <SplashVideo />
         <Nav />
         {children}
         <Footer />
