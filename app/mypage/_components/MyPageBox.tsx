@@ -4,49 +4,33 @@ import LoadingOverlay from "@/app/(components)/LoadingOverlay";
 import { validateEditProfileInput } from "@/util/validateEditProfile";
 import { validateResetPasswordInput } from "@/util/validateResetPasswordInput";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-const MyPageBox = () => {
+const MyPageBox = ({
+  charName,
+  userId,
+  userName,
+  userEmail,
+}: {
+  charName: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+}) => {
   const router = useRouter();
 
   const [isShowLoading, setIsLoading] = useState(false);
 
   const [isToggle, setIsToggle] = useState("개인정보변경");
 
-  const [userNameInput, setUserNameInput] = useState("");
-  const [userEmailInput, setUserEmailInput] = useState("");
-  const [userIdInput, setUserIdInput] = useState("");
-  const [userCharNameInput, setUserCharNameInput] = useState("");
+  const [userNameInput, setUserNameInput] = useState(userName);
+  const [userEmailInput, setUserEmailInput] = useState(userEmail);
+  const [userIdInput, setUserIdInput] = useState(userId);
+  const [userCharNameInput, setUserCharNameInput] = useState(charName);
 
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch("/api/auth/user");
-        const data = await res.json();
-        console.log("data", data);
-
-        const userName = data.user.userName;
-        const userId = data.user.userId;
-        const userEmail = data.user.userEmail;
-        const charName = data.user.charName;
-
-        setUserNameInput(userName);
-        setUserIdInput(userId);
-        setUserEmailInput(userEmail);
-        setUserCharNameInput(charName);
-      } catch (error) {
-        console.error("유저 정보를 불러오던 중 에러가 발생했습니다.", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchUserInfo();
-  }, []);
 
   const handleEditProfile = async () => {
     setIsLoading(true);
@@ -59,6 +43,7 @@ const MyPageBox = () => {
 
       if (validationMessage) {
         alert(validationMessage);
+        setIsLoading(false);
         return;
       }
       const res = await fetch("/api/mypage/edit-profile", {
@@ -77,6 +62,10 @@ const MyPageBox = () => {
         throw new Error("개인정보 변경 중 에러가 발생했습니다.");
       }
       alert("개인정보를 성공적으로 변경하였습니다.");
+      setUserNameInput(userNameInput);
+      setUserEmailInput(userEmailInput);
+      setUserCharNameInput(userCharNameInput);
+      router.refresh();
     } catch (error) {
       console.error("개인정보 변경 중 에러가 발생했습니다.");
     } finally {

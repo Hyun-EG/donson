@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
       {
         $set: {
           hashedPW: newHashedPW,
-          updateAt: new Date(),
+          updatedAt: new Date(),
         },
       }
     );
