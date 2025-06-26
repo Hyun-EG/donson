@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import LoadingOverlay from "./LoadingOverlay";
+import useUserStore from "@/store/useUserStore";
 
 const SubNav = ({
   setIsShowMenu,
@@ -17,14 +18,40 @@ const SubNav = ({
   const menuRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const pathName = usePathname();
+  const { userId } = useUserStore();
 
   const [charName, setCharName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [dp, setDp] = useState<number | string | null>(null);
 
   useEffect(() => {
     const charName = sessionStorage.getItem("userCharName");
     setCharName(charName);
   });
+
+  useEffect(() => {
+    const getDP = async () => {
+      try {
+        const res = await fetch("api/get-donson-point", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId }),
+        });
+        if (!res.ok) {
+          setDp("-");
+        }
+        const resDP = await res.json();
+        const dp = resDP.dp;
+        setDp(dp);
+      } catch (error) {
+        console.error("dp 불러오던 중 에러 발생");
+      }
+    };
+    getDP();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -73,6 +100,13 @@ const SubNav = ({
           <p className="text-sm">
             <span className="text-sky-500 font-bold">{charName}</span> 님
           </p>
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-sm text-red-300">DP</span>
+            <div className="w-20 flex justify-between items-center">
+              <span className="font-bold text-sm"> {dp}</span>
+              <span>포인트</span>
+            </div>
+          </div>
           <ul className="mt-4 flex flex-col justify-center gap-2">
             <p className="mb-2 border-b border-[#bebebe] font-bold">Menu.</p>
             <Link href="/mepo">
