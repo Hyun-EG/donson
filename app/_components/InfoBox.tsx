@@ -39,13 +39,9 @@ const InfoBox = ({
     }
   }, [charBasicInfo]);
 
-  const refreshData = () => {
-    setIsLoading(true);
-    router.refresh();
-  };
-
   const rewardDp = async () => {
     const dp = 5;
+    setIsLoading(true);
     try {
       const res = await fetch("/api/edit-donson-point", {
         method: "POST",
@@ -62,8 +58,10 @@ const InfoBox = ({
         return;
       }
       alert(`출석체크 보상 : ${dp} 포인트 지급이 완료되었습니다.`);
-    } catch (error) {
-      alert(error);
+    } catch (_) {
+      alert("서버 에러가 발생하였습니다.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -122,7 +120,7 @@ const InfoBox = ({
               </span>
               <button
                 onClick={() => {
-                  refreshData();
+                  router.refresh();
                 }}
                 disabled={isLoading}
                 className="px-1 font-bold bg-gray-500 rounded-[6px]"
