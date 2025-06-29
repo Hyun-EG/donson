@@ -12,10 +12,12 @@ const InfoBox = ({
   charBasicInfo,
   totalStat,
   propensity,
+  userId,
 }: {
   charBasicInfo: CharInfo;
   totalStat: CharStat;
   propensity: PersonalityRadarChartProps;
+  userId: string;
 }) => {
   const userCharName = charBasicInfo.character_name;
   const [isLoading, setIsLoading] = useState(true);
@@ -37,9 +39,51 @@ const InfoBox = ({
     }
   }, [charBasicInfo]);
 
-  const refreshData = () => {
+  const rewardDp = async () => {
+    const dp = 5;
     setIsLoading(true);
-    router.refresh();
+    try {
+      const res = await fetch("/api/edit-donson-point", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          dp,
+        }),
+      });
+      if (!res.ok) {
+        alert("돈슨 포인트 지급에 실패하였습니다.");
+        return;
+      }
+      alert(`출석체크 보상 : ${dp} 포인트 지급이 완료되었습니다.`);
+    } catch (_) {
+      alert("서버 에러가 발생하였습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDailyCheckIn = async () => {
+    try {
+      const res = await fetch("/api/daily-check-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.message || "출석체크에 실패하였습니다.");
+        return;
+      }
+      rewardDp();
+    } catch (error) {
+      console.error("출석체크 중 에러가 발생하였습니다.", error);
+      alert("서버 오류로 출석체크에 실패하였습니다.");
+    }
   };
 
   return (
@@ -60,13 +104,23 @@ const InfoBox = ({
             />
           )}
           <article className="flex flex-col justify-center px-4">
+            <div className="mb-1">
+              <button
+                onClick={() => {
+                  handleDailyCheckIn();
+                }}
+                className="px-1 font-bold border border-[#bebebe] rounded-[6px] text-sm"
+              >
+                출석체크
+              </button>
+            </div>
             <div className="flex gap-1 text-sm text-white">
               <span className="px-1 font-bold bg-sky-500 rounded-[6px]">
                 {charBasicInfo?.world_name}
               </span>
               <button
                 onClick={() => {
-                  refreshData();
+                  router.refresh();
                 }}
                 disabled={isLoading}
                 className="px-1 font-bold bg-gray-500 rounded-[6px]"

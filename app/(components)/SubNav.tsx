@@ -9,10 +9,12 @@ const SubNav = ({
   setIsShowMenu,
   isAnimating,
   isAdmin,
+  dp,
 }: {
   setIsShowMenu: (value: boolean) => void;
   isAnimating: boolean;
   isAdmin: boolean | null;
+  dp: number;
 }) => {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
@@ -52,6 +54,7 @@ const SubNav = ({
       setIsLoading(false);
     }
   };
+
   return (
     <>
       {isLoading && <LoadingOverlay />}
@@ -73,6 +76,21 @@ const SubNav = ({
           <p className="text-sm">
             <span className="text-sky-500 font-bold">{charName}</span> 님
           </p>
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-sm text-red-300">DP</span>
+            <div className="w-20 flex justify-between items-center">
+              <span className="font-bold text-sm"> {dp}</span>
+              <span>포인트</span>
+            </div>
+            <button
+              onClick={() => {
+                router.refresh();
+              }}
+              className="px-1 text-xs border"
+            >
+              갱신
+            </button>
+          </div>
           <ul className="mt-4 flex flex-col justify-center gap-2">
             <p className="mb-2 border-b border-[#bebebe] font-bold">Menu.</p>
             <Link href="/mepo">

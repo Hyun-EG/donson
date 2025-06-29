@@ -54,6 +54,7 @@ const page = async () => {
   return (
     <section>
       <InfoBox
+        userId={userId}
         charBasicInfo={charBasicInfo}
         totalStat={totalStat}
         propensity={propensity}
