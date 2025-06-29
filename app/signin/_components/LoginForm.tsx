@@ -29,6 +29,7 @@ const LoginForm = () => {
       if (res.ok) {
         await setUserIdAndOcid(userId);
         router.push("/");
+        router.refresh();
       } else {
         alert(result.message);
       }
