@@ -4,54 +4,29 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import LoadingOverlay from "./LoadingOverlay";
-import useUserStore from "@/store/useUserStore";
 
 const SubNav = ({
   setIsShowMenu,
   isAnimating,
   isAdmin,
+  dp,
 }: {
   setIsShowMenu: (value: boolean) => void;
   isAnimating: boolean;
   isAdmin: boolean | null;
+  dp: number;
 }) => {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const pathName = usePathname();
-  const { userId } = useUserStore();
 
   const [charName, setCharName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  const [dp, setDp] = useState<number | string | null>(null);
 
   useEffect(() => {
     const charName = sessionStorage.getItem("userCharName");
     setCharName(charName);
   });
-
-  useEffect(() => {
-    const getDP = async () => {
-      try {
-        const res = await fetch("api/get-donson-point", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userId }),
-        });
-        if (!res.ok) {
-          setDp("-");
-        }
-        const resDP = await res.json();
-        const dp = resDP.dp;
-        setDp(dp);
-      } catch (error) {
-        console.error("dp 불러오던 중 에러 발생");
-      }
-    };
-    getDP();
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -79,6 +54,7 @@ const SubNav = ({
       setIsLoading(false);
     }
   };
+
   return (
     <>
       {isLoading && <LoadingOverlay />}
@@ -106,6 +82,14 @@ const SubNav = ({
               <span className="font-bold text-sm"> {dp}</span>
               <span>포인트</span>
             </div>
+            <button
+              onClick={() => {
+                router.refresh();
+              }}
+              className="px-1 text-xs border"
+            >
+              갱신
+            </button>
           </div>
           <ul className="mt-4 flex flex-col justify-center gap-2">
             <p className="mb-2 border-b border-[#bebebe] font-bold">Menu.</p>
