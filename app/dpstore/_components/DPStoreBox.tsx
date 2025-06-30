@@ -29,10 +29,10 @@ const DPStoreBox = () => {
         description="자쿰~핑크빈(하드,카오스) + 마일리지 적립"
       />
       <ItemCard
-        title="검밑솔 보스 + 마일리지 적립"
+        title="검밑솔 보스 (전체) + 마일리지 적립"
         dpPoint={150}
         meso={70000}
-        description="스우~진힐라(카오스, 하드) 보스컷 400% 이상만"
+        description="스우~진힐라(카오스, 하드) 보스컷 400% 이상만 + 마일리지 적립"
       />
     </section>
   );
