@@ -9,6 +9,7 @@ export async function POST(req: NextRequest) {
     userName,
     userEmail,
     certifyNo,
+    matchCertifyDisabled,
     userId,
     charName,
     userPassword,
@@ -19,6 +20,7 @@ export async function POST(req: NextRequest) {
     !userName ||
     !userEmail ||
     !certifyNo ||
+    !matchCertifyDisabled ||
     !userId ||
     !charName ||
     !userPassword ||
@@ -53,6 +55,13 @@ export async function POST(req: NextRequest) {
           message: "인증 번호가 일치하지 않습니다.",
           status: 400,
         },
+        { status: 400 }
+      );
+    }
+
+    if (matchCertifyDisabled === false) {
+      return NextResponse.json(
+        { message: "인증 번호 확인을 진행해주세요.", status: 400 },
         { status: 400 }
       );
     }
