@@ -41,6 +41,7 @@ const SignupForm = () => {
       userName,
       userEmail,
       certifyNo,
+      matchCertifyDisabled,
       userId,
       charName,
       userPassword,
@@ -62,6 +63,7 @@ const SignupForm = () => {
           userName,
           userEmail,
           certifyNo,
+          matchCertifyDisabled,
           userId,
           charName,
           userPassword,
@@ -93,6 +95,9 @@ const SignupForm = () => {
       if (res.ok) {
         setSendCertifyDisabled(true);
         alert("인증번호 전송에 성공하였습니다.");
+      } else {
+        const result = await res.json();
+        alert(result.message || "인증번호 전송에 실패하였습니다.");
       }
     } catch (error) {
       console.error("인증번호 전송 실패:", error);
