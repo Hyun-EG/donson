@@ -1,16 +1,49 @@
 "use client";
 
+import LoadingOverlay from "@/app/(components)/LoadingOverlay";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const OrderedBox = ({
   groupedOrders,
+  userId,
 }: {
   groupedOrders: Record<string, { title: string; done: boolean }[]>;
+  userId: string;
 }) => {
-  const [isShowDetail, setIsShowDetail] = useState<string | null>(null);
+  const router = useRouter();
 
+  const [isShowDetail, setIsShowDetail] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCompleteItem = async (title: string) => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/delete-ordered", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          title,
+        }),
+      });
+      if (!res.ok) {
+        alert("해당 아이템 처리에 실패하였습니다.");
+        return;
+      }
+      alert("해당 아이템을 완료하였습니다.");
+      router.refresh();
+    } catch (_) {
+      alert("해당 아이템 처리 중 에러가 발생하였습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <section className="mt-4 flex flex-col">
+      {isLoading && <LoadingOverlay />}
       <h1 className="font-bold text-center">용사님들의 주문내역</h1>
       <main>
         {Object.entries(groupedOrders).map(([userId, items]) => (
@@ -33,7 +66,12 @@ const OrderedBox = ({
                     className="p-2 text-sm border rounded bg-gray-100"
                   >
                     <p>타이틀: {item.title}</p>
-                    <button className="w-full py-1 mt-2 bg-sky-500 text-white rounded-[6px]">
+                    <button
+                      onClick={() => {
+                        handleCompleteItem(item.title);
+                      }}
+                      className="w-full py-1 mt-2 bg-sky-500 text-white rounded-[6px]"
+                    >
                       수행 완료하기
                     </button>
                   </div>

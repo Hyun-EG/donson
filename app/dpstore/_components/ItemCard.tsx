@@ -6,7 +6,13 @@ import LoadingOverlay from "@/app/(components)/LoadingOverlay";
 import useUserStore from "@/store/useUserStore";
 import { useRouter } from "next/navigation";
 
-const ItemCard = ({ title, dpPoint, meso, description }: DPStoreProps) => {
+const ItemCard = ({
+  title,
+  dpPoint,
+  meso,
+  description,
+  condition,
+}: DPStoreProps) => {
   const { userId } = useUserStore();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -68,6 +74,9 @@ const ItemCard = ({ title, dpPoint, meso, description }: DPStoreProps) => {
         </p>
       </header>
       <main>
+        <p className="font-bold text-xs">
+          가능 직군 : <span>{condition}</span>
+        </p>
         <span className="font-bold text-xs">{description}</span>
       </main>
       <footer>

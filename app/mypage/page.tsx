@@ -3,6 +3,7 @@ import MyPageBox from "./_components/MyPageBox";
 import { getUserCookies } from "@/util/getUserCookie";
 import { redirect } from "next/navigation";
 import { connectDB } from "@/util/mongodb";
+import { OrderedItemsType } from "./_components/types";
 
 const MyPage = async () => {
   const cookie = await getUserCookies();
@@ -29,6 +30,24 @@ const MyPage = async () => {
     }
   );
 
+  const resOrderedItems = await db
+    .collection("ordered-items")
+    .find({ userId })
+    .toArray();
+
+  const orderedItems: OrderedItemsType[] = resOrderedItems.map((item) => ({
+    _id: item._id.toString(),
+    userId: item.userId,
+    title: item.title,
+    dpPoint: item.dpPoint,
+    description: item.description,
+    orderedAt:
+      typeof item.orderedAt === "object"
+        ? new Date(item.orderedAt).getTime()
+        : item.orderedAt,
+    done: item.done,
+  }));
+
   const data = await resOcid.json();
   const ocid = data.ocid;
 
@@ -44,7 +63,7 @@ const MyPage = async () => {
   }
 
   return (
-    <section>
+    <section className="mb-10">
       <h1 className="mb-4 font-bold text-center text-lg">마이페이지</h1>
       <main>
         <MyPageBox
@@ -52,6 +71,7 @@ const MyPage = async () => {
           userName={userName}
           userId={userId}
           userEmail={userEmail}
+          resOrderedItems={orderedItems}
         />
       </main>
     </section>

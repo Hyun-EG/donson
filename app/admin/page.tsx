@@ -11,6 +11,8 @@ const Admin = async () => {
     redirect("/signin");
   }
 
+  const { userId } = cookie;
+
   const db = (await connectDB).db("donson");
   const rawContact = await db.collection("contact").find().toArray();
   const rawOrders = await db.collection("ordered-items").find().toArray();
@@ -35,7 +37,11 @@ const Admin = async () => {
     <section className="mb-10">
       <h1 className="text-lg text-center font-bold">관리자 메뉴</h1>
       <MaplePointPriceForm />
-      <AdminBox contacts={contact} groupedOrders={groupedOrders} />
+      <AdminBox
+        userId={userId}
+        contacts={contact}
+        groupedOrders={groupedOrders}
+      />
     </section>
   );
 };
