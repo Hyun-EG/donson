@@ -17,12 +17,12 @@ export async function POST(req: NextRequest) {
   } = body;
 
   if (
-    !userName ||
-    !userEmail ||
-    !certifyNo ||
-    !matchCertifyDisabled ||
-    !userId ||
-    !charName ||
+    !userName?.trim() ||
+    !userEmail?.trim() ||
+    !certifyNo?.trim() ||
+    matchCertifyDisabled !== true ||
+    !userId?.trim() ||
+    !charName?.trim() ||
     !userPassword ||
     !confirmUserPassword
   ) {
@@ -83,6 +83,12 @@ export async function POST(req: NextRequest) {
       charName,
       hashedPW,
       createdAt: new Date(),
+    });
+
+    await db.collection("dp").insertOne({
+      userId,
+      dp: 0,
+      updateAt: Date.now(),
     });
 
     await db.collection("certify").deleteOne({ _id: cert?._id });
