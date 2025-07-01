@@ -2,6 +2,7 @@ export function validateSignupInput({
   userName,
   userEmail,
   certifyNo,
+  matchCertifyDisabled,
   userId,
   charName,
   userPassword,
@@ -10,6 +11,7 @@ export function validateSignupInput({
   userName?: string;
   userEmail?: string;
   certifyNo?: string;
+  matchCertifyDisabled?: boolean;
   userId?: string;
   charName?: string;
   userPassword?: string;
@@ -24,6 +26,9 @@ export function validateSignupInput({
   }
   if (!certifyNo) {
     return "인증번호를 입력해주세요.";
+  }
+  if (matchCertifyDisabled === false) {
+    return "인증번호 확인을 진행해주세요.";
   }
   if (!userId) {
     return "아이디를 입력해주세요.";
