@@ -17,23 +17,23 @@ export function validateSignupInput({
   userPassword?: string;
   confirmUserPassword?: string;
 }): string | null {
-  if (!userName) {
+  if (!userName?.trim()) {
     return "성함을 입력해주세요.";
   }
 
-  if (!userEmail) {
+  if (!userEmail?.trim()) {
     return "이메일을 입력해주세요.";
   }
-  if (!certifyNo) {
+  if (!certifyNo?.trim()) {
     return "인증번호를 입력해주세요.";
   }
   if (matchCertifyDisabled === false) {
     return "인증번호 확인을 진행해주세요.";
   }
-  if (!userId) {
+  if (!userId?.trim()) {
     return "아이디를 입력해주세요.";
   }
-  if (!charName) {
+  if (!charName?.trim()) {
     return "캐릭터명을 입력해주세요.";
   }
   if (!userPassword) {
