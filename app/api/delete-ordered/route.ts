@@ -6,6 +6,12 @@ export async function POST(req: NextRequest) {
 
   try {
     const db = (await connectDB).db("donson");
+    await db.collection("bought-items").updateOne(
+      { userId, title },
+      {
+        $set: { done: true },
+      }
+    );
     await db.collection("ordered-items").deleteOne({ userId, title });
     return NextResponse.json(
       { message: "해당 아이템을 완료하여 삭제합니다.", status: 200 },
