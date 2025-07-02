@@ -4,6 +4,6 @@ export type OrderedItemsType = {
   title: string;
   dpPoint: number;
   description: string;
-  orderedAt: number;
+  boughtAt: number;
   done: boolean;
 };

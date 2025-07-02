@@ -6,11 +6,11 @@ export async function POST(req: NextRequest) {
 
   try {
     const db = (await connectDB).db("donson");
-    const target = await db
-      .collection("ordered-items")
+    const bought = await db
+      .collection("bought-items")
       .findOne({ userId, title });
 
-    if (!target) {
+    if (!bought) {
       await db.collection("ordered-items").insertOne({
         userId,
         title,
@@ -19,13 +19,30 @@ export async function POST(req: NextRequest) {
         orderedAt: Date.now(),
         done: false,
       });
+
+      await db.collection("bought-items").insertOne({
+        userId,
+        title,
+        dpPoint,
+        description,
+        boughtAt: Date.now(),
+        done: false,
+      });
+
       return NextResponse.json(
-        { title, message: "구매리스트 추가에 성공하였습니다.", status: 200 },
+        {
+          title,
+          dpPoint,
+          description,
+          boughtAt: Date.now(),
+          message: "구매리스트 추가에 성공하였습니다.",
+          status: 200,
+        },
         { status: 200 }
       );
     }
 
-    if (target) {
+    if (bought) {
       return NextResponse.json(
         { message: "이미 구매한 상품입니다.", status: 409 },
         { status: 409 }
