@@ -30,21 +30,21 @@ const MyPage = async () => {
     }
   );
 
-  const resOrderedItems = await db
-    .collection("ordered-items")
+  const resBoughtItems = await db
+    .collection("bought-items")
     .find({ userId })
     .toArray();
 
-  const orderedItems: OrderedItemsType[] = resOrderedItems.map((item) => ({
+  const boughtItems: OrderedItemsType[] = resBoughtItems.map((item) => ({
     _id: item._id.toString(),
     userId: item.userId,
     title: item.title,
     dpPoint: item.dpPoint,
     description: item.description,
-    orderedAt:
-      typeof item.orderedAt === "object"
-        ? new Date(item.orderedAt).getTime()
-        : item.orderedAt,
+    boughtAt:
+      typeof item.boughtAt === "object"
+        ? new Date(item.boughtAt).getTime()
+        : item.boughtAt,
     done: item.done,
   }));
 
@@ -71,7 +71,7 @@ const MyPage = async () => {
           userName={userName}
           userId={userId}
           userEmail={userEmail}
-          resOrderedItems={orderedItems}
+          resBoughtItems={boughtItems}
         />
       </main>
     </section>
