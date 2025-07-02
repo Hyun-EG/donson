@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (target.dp > dp) {
+  if (target.dp >= dp) {
     const resultDp = target.dp - dp;
     await db.collection("dp").updateOne(
       { userId },
