@@ -6,17 +6,15 @@ import React, { useState } from "react";
 
 const OrderedBox = ({
   groupedOrders,
-  userId,
 }: {
   groupedOrders: Record<string, { title: string; done: boolean }[]>;
-  userId: string;
 }) => {
   const router = useRouter();
 
   const [isShowDetail, setIsShowDetail] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleCompleteItem = async (title: string) => {
+  const handleCompleteItem = async (title: string, userId: string) => {
     setIsLoading(true);
     try {
       const res = await fetch("/api/delete-ordered", {
@@ -68,7 +66,7 @@ const OrderedBox = ({
                     <p>타이틀: {item.title}</p>
                     <button
                       onClick={() => {
-                        handleCompleteItem(item.title);
+                        handleCompleteItem(item.title, userId);
                       }}
                       className="w-full py-1 mt-2 bg-sky-500 text-white rounded-[6px]"
                     >
