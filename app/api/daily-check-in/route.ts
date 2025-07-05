@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     const db = (await connectDB).db("donson");
 
-    const now = new Date();
+    const now = new Date(Date.now() + 9 * 60 * 60 * 1000);
     const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
 
     const alreadyChecked = await db.collection("check-in").findOne({
