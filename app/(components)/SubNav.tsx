@@ -151,6 +151,22 @@ const SubNav = ({
                 </li>
               </div>
             </Link>
+            <Link href="/baseball">
+              <div className="flex justify-center items-center gap-1">
+                <span className="w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
+                  N
+                </span>
+                <li
+                  style={{ fontWeight: pathName === "/baseball" ? "bold" : "" }}
+                  className="text-center text-sm"
+                  onClick={() => {
+                    setIsShowMenu(false);
+                  }}
+                >
+                  야구 게임
+                </li>
+              </div>
+            </Link>
             <Link href="/weather">
               <li
                 style={{ fontWeight: pathName === "/weather" ? "bold" : "" }}
