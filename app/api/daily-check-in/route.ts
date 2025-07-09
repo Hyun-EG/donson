@@ -10,28 +10,39 @@ export async function POST(req: NextRequest) {
     const now = new Date(Date.now() + 9 * 60 * 60 * 1000);
     const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
 
-    const alreadyChecked = await db.collection("check-in").findOne({
-      userId,
-      date: today,
-    });
+    const target = await db.collection("check-in").findOne({ userId });
 
-    if (alreadyChecked) {
+    if (!target) {
+      await db.collection("check-in").insertOne({ userId, date: today });
+
+      return NextResponse.json(
+        { message: "출석체크에 성공하였습니다", status: 200 },
+        { status: 200 }
+      );
+    }
+
+    if (target.date === today) {
       return NextResponse.json(
         { message: "이미 오늘 출석체크를 하였습니다.", status: 409 },
         { status: 409 }
       );
     }
 
-    await db.collection("check-in").insertOne({
-      userId,
-      date: today,
-      createdAt: Date.now(),
-    });
+    if (target.date !== today) {
+      await db.collection("check-in").updateOne(
+        { userId },
+        {
+          $set: {
+            date: today,
+          },
+        }
+      );
 
-    return NextResponse.json(
-      { message: "출석체크에 성공하였습니다", status: 200 },
-      { status: 200 }
-    );
+      return NextResponse.json(
+        { message: "출석체크에 성공하였습니다", status: 200 },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     console.error(error);
     return NextResponse.json(
