@@ -13,9 +13,7 @@ export async function POST(req: NextRequest) {
     const target = await db.collection("check-in").findOne({ userId });
 
     if (!target) {
-      await db
-        .collection("check-in")
-        .insertOne({ userId, date: today, createdAt: Date.now() });
+      await db.collection("check-in").insertOne({ userId, date: today });
 
       return NextResponse.json(
         { message: "출석체크에 성공하였습니다", status: 200 },
@@ -23,23 +21,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const alreadyChecked = await db.collection("check-in").findOne({
-      userId,
-      date: today,
-    });
-
-    if (alreadyChecked) {
+    if (target.date === today) {
       return NextResponse.json(
         { message: "이미 오늘 출석체크를 하였습니다.", status: 409 },
         { status: 409 }
       );
     }
 
-    if (!alreadyChecked) {
+    if (target.date !== today) {
       await db.collection("check-in").updateOne(
         { userId },
         {
-          date: today,
+          $set: {
+            date: today,
+          },
         }
       );
 
