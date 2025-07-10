@@ -8,7 +8,10 @@ export async function POST(req: NextRequest) {
     const db = (await connectDB).db("donson");
 
     const now = new Date(Date.now() + 9 * 60 * 60 * 1000);
-    const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+    const pad = (n: number) => n.toString().padStart(2, "0");
+    const today = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(
+      now.getDate()
+    )}`;
 
     const target = await db.collection("check-in").findOne({ userId });
 
