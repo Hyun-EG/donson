@@ -158,7 +158,7 @@ const BaseBallBox = ({ userId }: { userId: string }) => {
                 type="number"
                 value={guessInput}
                 onChange={(e) => setGuessInput(e.target.value)}
-                className="pl-2 py-1 text-sm border rounded-[6px]"
+                className="pl-2 py-1 text-sm border bg-white rounded-[6px]"
                 placeholder="숫자를 입력해주세요."
               />
               <button
@@ -173,7 +173,7 @@ const BaseBallBox = ({ userId }: { userId: string }) => {
                 type="number"
                 value={answerInput}
                 onChange={(e) => setAnswerInput(e.target.value)}
-                className="pl-2 py-1 text-sm border rounded-[6px]"
+                className="pl-2 py-1 text-sm border bg-white rounded-[6px]"
                 placeholder="정답을 입력해주세요."
               />
               <button
