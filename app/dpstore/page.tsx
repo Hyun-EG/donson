@@ -35,7 +35,7 @@ const DPStore = async () => {
         ex) 주간 유니온 퀘스트 , 제시 가격: 5p
       </p>
       <p className="text-end text-sm font-bold">
-        DP 포인트 : <span className="text-sky-500">{userDp}</span> p
+        DP 포인트 : <span className="text-sky-500">{userDp?.toFixed(1)}</span> p
       </p>
       <article>
         <DPStoreBox />
