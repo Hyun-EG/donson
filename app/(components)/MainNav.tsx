@@ -25,15 +25,14 @@ const MainNav = ({ dp, isAdmin }: { dp: number; isAdmin: boolean }) => {
   return (
     <nav className="fixed top-0 left-0 w-full h-14 px-3 flex justify-between items-center border-b border-[#bebebe] bg-white">
       <ul className="flex items-center gap-4 text-xs">
-        <Image
+        <img
           onClick={() => {
             router.push("/");
           }}
           className="border border-[#bebebe] rounded-full cursor-pointer"
-          src={logo}
-          alt="돈슨 로고"
+          src="/icons/icon-nav-logo.svg"
           width={30}
-          priority
+          alt="돈슨 로고"
         />
         <li
           style={{ fontWeight: pathName === "/info" ? "bold" : "" }}
