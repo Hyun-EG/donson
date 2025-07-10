@@ -79,8 +79,8 @@ const SubNav = ({
           <div className="flex items-center gap-2">
             <span className="font-bold text-sm text-red-300">DP</span>
             <div className="w-20 flex justify-between items-center">
-              <span className="font-bold text-sm"> {dp}</span>
-              <span>포인트</span>
+              <span className="font-bold text-sm"> {dp?.toFixed(1)}</span>
+              <span className="text-sm font-bold">point</span>
             </div>
             <button
               onClick={() => {
@@ -103,9 +103,6 @@ const SubNav = ({
             </div>
             <Link href="/ren">
               <div className="flex justify-center items-center gap-1">
-                <span className="w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
-                  N
-                </span>
                 <li
                   style={{ fontWeight: pathName === "/ren" ? "bold" : "" }}
                   className="text-center text-sm"
@@ -119,9 +116,6 @@ const SubNav = ({
             </Link>
             <Link href="/skilltree">
               <div className="flex justify-center items-center gap-1">
-                <span className="w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
-                  N
-                </span>
                 <li
                   style={{
                     fontWeight: pathName === "/skilltree" ? "bold" : "",
@@ -148,6 +142,22 @@ const SubNav = ({
                   }}
                 >
                   DP Store
+                </li>
+              </div>
+            </Link>
+            <Link href="/baseball">
+              <div className="flex justify-center items-center gap-1">
+                <span className="w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
+                  N
+                </span>
+                <li
+                  style={{ fontWeight: pathName === "/baseball" ? "bold" : "" }}
+                  className="text-center text-sm"
+                  onClick={() => {
+                    setIsShowMenu(false);
+                  }}
+                >
+                  야구 게임
                 </li>
               </div>
             </Link>
