@@ -80,7 +80,7 @@ const SubNav = ({
             <span className="font-bold text-sm text-red-300">DP</span>
             <div className="w-20 flex justify-between items-center">
               <span className="font-bold text-sm"> {dp}</span>
-              <span>포인트</span>
+              <span className="text-sm font-bold">point</span>
             </div>
             <button
               onClick={() => {
