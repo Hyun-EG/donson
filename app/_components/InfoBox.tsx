@@ -66,6 +66,7 @@ const InfoBox = ({
   };
 
   const handleDailyCheckIn = async () => {
+    setIsLoading(true);
     try {
       const res = await fetch("/api/daily-check-in", {
         method: "POST",
@@ -83,6 +84,35 @@ const InfoBox = ({
     } catch (error) {
       console.error("출석체크 중 에러가 발생하였습니다.", error);
       alert("서버 오류로 출석체크에 실패하였습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSummerEventGetReward = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/event-summer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+        }),
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        alert(result.message);
+      }
+
+      if (res.ok) {
+        alert("리워드 보상으로 10dp 획득하였습니다.");
+      }
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -176,22 +206,32 @@ const InfoBox = ({
               </span>
             </p>
           </div>
-          <h1 className="text-sm font-bold">Exp</h1>
-          <div className="w-full flex items-center gap-2">
-            <div className="w-[85%] h-4 py-1">
-              <div
-                style={{
-                  width: `${Math.floor(
-                    Number(charBasicInfo?.character_exp_rate)
-                  )}%`,
-                }}
-                className="h-2 bg-green-300 rounded-r-xl"
-              />
-            </div>
-            <div className="w-[15%]">
-              <p className="text-sm">{charBasicInfo?.character_exp_rate}%</p>
+          <div className="border mt-2 px-2 rounded-[6px]">
+            <h1 className="text-sm font-bold">Exp</h1>
+            <div className="w-full flex items-center gap-2">
+              <div className="w-[85%] h-4 py-1">
+                <div
+                  style={{
+                    width: `${Math.floor(
+                      Number(charBasicInfo?.character_exp_rate)
+                    )}%`,
+                  }}
+                  className="h-2 bg-green-300 rounded-r-xl"
+                />
+              </div>
+              <div className="w-[15%]">
+                <p className="text-sm font-bold">
+                  {charBasicInfo?.character_exp_rate}%
+                </p>
+              </div>
             </div>
           </div>
+          <div
+            onClick={() => {
+              handleSummerEventGetReward();
+            }}
+            className="w-full h-20 mt-2 bg-ad-summer bg-cover bg-center sm500:bg-none"
+          ></div>
           <div className="flex justify-center items-center">
             <div className="w-64 h-64">
               <PersonalityRadarChart propensity={propensity} />

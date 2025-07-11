@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { PersonalityRadarChartProps } from "./types";
 import { Radar } from "react-chartjs-2";
 import {
