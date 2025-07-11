@@ -66,6 +66,7 @@ const InfoBox = ({
   };
 
   const handleDailyCheckIn = async () => {
+    setIsLoading(true);
     try {
       const res = await fetch("/api/daily-check-in", {
         method: "POST",
@@ -83,6 +84,8 @@ const InfoBox = ({
     } catch (error) {
       console.error("출석체크 중 에러가 발생하였습니다.", error);
       alert("서버 오류로 출석체크에 실패하였습니다.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -176,20 +179,24 @@ const InfoBox = ({
               </span>
             </p>
           </div>
-          <h1 className="text-sm font-bold">Exp</h1>
-          <div className="w-full flex items-center gap-2">
-            <div className="w-[85%] h-4 py-1">
-              <div
-                style={{
-                  width: `${Math.floor(
-                    Number(charBasicInfo?.character_exp_rate)
-                  )}%`,
-                }}
-                className="h-2 bg-green-300 rounded-r-xl"
-              />
-            </div>
-            <div className="w-[15%]">
-              <p className="text-sm">{charBasicInfo?.character_exp_rate}%</p>
+          <div className="border mt-2 px-2 rounded-[6px]">
+            <h1 className="text-sm font-bold">Exp</h1>
+            <div className="w-full flex items-center gap-2">
+              <div className="w-[85%] h-4 py-1">
+                <div
+                  style={{
+                    width: `${Math.floor(
+                      Number(charBasicInfo?.character_exp_rate)
+                    )}%`,
+                  }}
+                  className="h-2 bg-green-300 rounded-r-xl"
+                />
+              </div>
+              <div className="w-[15%]">
+                <p className="text-sm font-bold">
+                  {charBasicInfo?.character_exp_rate}%
+                </p>
+              </div>
             </div>
           </div>
           <div className="flex justify-center items-center">
