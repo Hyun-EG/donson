@@ -16,8 +16,6 @@ const page = async () => {
   const target = await db.collection("user").findOne({ userId });
   const ocid = target?.ocid;
 
-  console.log("cookie", cookie);
-
   const resCharBasicInfo = await fetch(
     `https://open.api.nexon.com/maplestory/v1/character/basic?ocid=${ocid}`,
     {
