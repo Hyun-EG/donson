@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import logo from "@/public/icons/icon-nav-logo.svg";
 import menu from "@/public/icons/icon-menu.svg";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
