@@ -9,6 +9,7 @@ module.exports = {
       backgroundImage: {
         "ren-pattern": "url('/bg/donson-login-bg.webp')",
         "ren-video": "url('/video/video-splash.webp')",
+        "ad-summer": "url('/images/ad-summer.png')",
       },
       keyframes: {
         fadeOut: {

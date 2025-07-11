@@ -199,6 +199,7 @@ const InfoBox = ({
               </div>
             </div>
           </div>
+          <div className="w-full h-20 mt-2 bg-ad-summer bg-cover bg-center sm500:bg-none"></div>
           <div className="flex justify-center items-center">
             <div className="w-64 h-64">
               <PersonalityRadarChart propensity={propensity} />
