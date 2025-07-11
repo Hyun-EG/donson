@@ -91,80 +91,71 @@ const SubNav = ({
               갱신
             </button>
           </div>
+          <article className="my-2 border-b border-[#bebebe] ">
+            <p className="text-xs text-[#bebebe] font-bold">Menu.</p>
+          </article>
           <ul className="mt-4 flex flex-col justify-center gap-2">
-            <p className="mb-2 border-b border-[#bebebe] font-bold">Menu.</p>
+            <li
+              style={{ fontWeight: pathName === "/mepo" ? "bold" : "" }}
+              className="text-center text-sm text-[#bebebe] line-through"
+            >
+              메포시세 (공사중)
+            </li>
+            <li
+              style={{ fontWeight: pathName === "/ren" ? "bold" : "" }}
+              className="text-center text-sm text-[#555555]"
+              onClick={() => {
+                setIsShowMenu(false);
+              }}
+            >
+              <Link href="/ren">렌 사냥터|빌드</Link>
+            </li>
+            <li
+              style={{
+                fontWeight: pathName === "/skilltree" ? "bold" : "",
+              }}
+              className="text-center text-sm text-[#555555]"
+              onClick={() => {
+                setIsShowMenu(false);
+              }}
+            >
+              <Link href="/skilltree">렌 스킬트리</Link>
+            </li>
+
             <div className="flex justify-center items-center gap-1">
+              <span className="w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
+                N
+              </span>
               <li
-                style={{ fontWeight: pathName === "/mepo" ? "bold" : "" }}
-                className="text-center text-sm line-through"
+                style={{ fontWeight: pathName === "/dpstore" ? "bold" : "" }}
+                className="text-center text-sm text-[#555555]"
+                onClick={() => {
+                  setIsShowMenu(false);
+                }}
               >
-                메포시세 (공사중)
+                <Link href="/dpstore">DP Store</Link>
               </li>
             </div>
-            <Link href="/ren">
-              <div className="flex justify-center items-center gap-1">
-                <li
-                  style={{ fontWeight: pathName === "/ren" ? "bold" : "" }}
-                  className="text-center text-sm"
-                  onClick={() => {
-                    setIsShowMenu(false);
-                  }}
-                >
-                  렌 사냥터|빌드
-                </li>
-              </div>
-            </Link>
-            <Link href="/skilltree">
-              <div className="flex justify-center items-center gap-1">
-                <li
-                  style={{
-                    fontWeight: pathName === "/skilltree" ? "bold" : "",
-                  }}
-                  className="text-center text-sm"
-                  onClick={() => {
-                    setIsShowMenu(false);
-                  }}
-                >
-                  렌 스킬트리
-                </li>
-              </div>
-            </Link>
-            <Link href="/dpstore">
-              <div className="flex justify-center items-center gap-1">
-                <span className="w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
-                  N
-                </span>
-                <li
-                  style={{ fontWeight: pathName === "/dpstore" ? "bold" : "" }}
-                  className="text-center text-sm"
-                  onClick={() => {
-                    setIsShowMenu(false);
-                  }}
-                >
-                  DP Store
-                </li>
-              </div>
-            </Link>
-            <Link href="/baseball">
-              <div className="flex justify-center items-center gap-1">
-                <span className="w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
-                  N
-                </span>
-                <li
-                  style={{ fontWeight: pathName === "/baseball" ? "bold" : "" }}
-                  className="text-center text-sm"
-                  onClick={() => {
-                    setIsShowMenu(false);
-                  }}
-                >
-                  야구 게임
-                </li>
-              </div>
-            </Link>
+            <div className="flex justify-center items-center gap-1">
+              <span className="w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
+                N
+              </span>
+              <li
+                style={{
+                  fontWeight: pathName === "/baseball" ? "bold" : "",
+                }}
+                className="text-center text-sm text-[#555555]"
+                onClick={() => {
+                  setIsShowMenu(false);
+                }}
+              >
+                <Link href="/baseball">야구 게임</Link>
+              </li>
+            </div>
             <Link href="/weather">
               <li
                 style={{ fontWeight: pathName === "/weather" ? "bold" : "" }}
-                className="text-center text-sm"
+                className="text-center text-sm text-[#555555]"
                 onClick={() => {
                   setIsShowMenu(false);
                 }}
@@ -172,40 +163,34 @@ const SubNav = ({
                 오늘 피방갈 날씬가?
               </li>
             </Link>
-            <Link href="/contact">
-              <li
-                style={{ fontWeight: pathName === "/contact" ? "bold" : "" }}
-                className="text-center text-sm"
-                onClick={() => {
-                  setIsShowMenu(false);
-                }}
-              >
-                고객문의
-              </li>
-            </Link>
-            <Link href="mypage">
-              <li
-                style={{ fontWeight: pathName === "/mypage" ? "bold" : "" }}
-                className="text-center text-sm"
-                onClick={() => {
-                  setIsShowMenu(false);
-                }}
-              >
-                마이페이지
-              </li>
-            </Link>
+            <li
+              style={{ fontWeight: pathName === "/contact" ? "bold" : "" }}
+              className="text-center text-sm text-[#555555]"
+              onClick={() => {
+                setIsShowMenu(false);
+              }}
+            >
+              <Link href="/contact">고객문의</Link>
+            </li>
+            <li
+              style={{ fontWeight: pathName === "/mypage" ? "bold" : "" }}
+              className="text-center text-sm text-[#555555]"
+              onClick={() => {
+                setIsShowMenu(false);
+              }}
+            >
+              <Link href="mypage">마이페이지</Link>
+            </li>
             {isAdmin && (
-              <Link href="admin">
-                <li
-                  style={{ fontWeight: pathName === "/admin" ? "bold" : "" }}
-                  className="text-center text-sm"
-                  onClick={() => {
-                    setIsShowMenu(false);
-                  }}
-                >
-                  관리자
-                </li>
-              </Link>
+              <li
+                style={{ fontWeight: pathName === "/admin" ? "bold" : "" }}
+                className="text-center text-sm text-[#555555]"
+                onClick={() => {
+                  setIsShowMenu(false);
+                }}
+              >
+                <Link href="admin">관리자</Link>
+              </li>
             )}
           </ul>
         </nav>
