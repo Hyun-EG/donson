@@ -83,7 +83,7 @@ const BaseBallBox = ({ userId }: { userId: string }) => {
         <div>
           <div className="my-4">
             <p className="text-sm text-center font-bold">
-              승리 시 [<span className="text-sky-500"> 0.1dp </span>] 를
+              승리 시 [<span className="text-sky-500"> 0.2dp </span>] 를
               적립합니다.
             </p>
             <p className="text-center text-red-500 font-bold">
