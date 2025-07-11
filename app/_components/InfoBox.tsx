@@ -89,6 +89,33 @@ const InfoBox = ({
     }
   };
 
+  const handleSummerEventGetReward = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/event-summer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+        }),
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        alert(result.message);
+      }
+
+      if (res.ok) {
+        alert("리워드 보상으로 10dp 획득하였습니다.");
+      }
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       {isLoading && <LoadingOverlay />}
@@ -199,7 +226,12 @@ const InfoBox = ({
               </div>
             </div>
           </div>
-          <div className="w-full h-20 mt-2 bg-ad-summer bg-cover bg-center sm500:bg-none"></div>
+          <div
+            onClick={() => {
+              handleSummerEventGetReward();
+            }}
+            className="w-full h-20 mt-2 bg-ad-summer bg-cover bg-center sm500:bg-none"
+          ></div>
           <div className="flex justify-center items-center">
             <div className="w-64 h-64">
               <PersonalityRadarChart propensity={propensity} />
