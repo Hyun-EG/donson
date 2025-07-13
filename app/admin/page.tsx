@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import MaplePointPriceForm from "./_components/MaplePointPriceForm";
 import AdminBox from "./_components/AdminBox";
 import { Contact } from "./_components/types";
+import PostAlertToUserBox from "./_components/PostAlertToUserBox";
 
 const Admin = async () => {
   const cookie = await getUserCookies();
@@ -35,6 +36,7 @@ const Admin = async () => {
     <section className="mb-10">
       <h1 className="text-lg text-center font-bold">관리자 메뉴</h1>
       <MaplePointPriceForm />
+      <PostAlertToUserBox />
       <AdminBox contacts={contact} groupedOrders={groupedOrders} />
     </section>
   );
