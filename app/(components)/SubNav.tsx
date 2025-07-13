@@ -47,6 +47,8 @@ const SubNav = ({
       await fetch("api/logout", {
         method: "POST",
       });
+      sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("userCharName");
       router.push("/signin");
     } catch (error) {
       console.error("로그아웃 중 에러가 발생했습니다.");
