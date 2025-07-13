@@ -7,6 +7,7 @@ import { CharInfo, PersonalityRadarChartProps } from "./types";
 import PersonalityRadarChart from "./PersonalityRadarChart";
 import LoadingOverlay from "../(components)/LoadingOverlay";
 import { useRouter } from "next/navigation";
+import { subscribeUserToPush } from "@/util/pushClient";
 
 const InfoBox = ({
   charBasicInfo,
@@ -116,6 +117,32 @@ const InfoBox = ({
     }
   };
 
+  const handleSubscribe = async () => {
+    const sub = await subscribeUserToPush();
+    if (sub) {
+      setIsLoading(true);
+      try {
+        const res = await fetch("/api/save-subscription", {
+          method: "POST",
+          body: JSON.stringify(sub),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const result = await res.json();
+        alert(result.message);
+        if (!res.ok) {
+          alert("구독 진행 중 에러가 발생했습니다.");
+          return;
+        }
+      } catch (_) {
+        alert("서버 에러 (고객문의 부탁드립니다)");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
   return (
     <>
       {isLoading && <LoadingOverlay />}
@@ -134,7 +161,7 @@ const InfoBox = ({
             />
           )}
           <article className="flex flex-col justify-center px-4">
-            <div className="mb-1">
+            <div className="mb-1 flex gap-1">
               <button
                 onClick={() => {
                   handleDailyCheckIn();
@@ -142,6 +169,15 @@ const InfoBox = ({
                 className="px-1 font-bold border border-[#bebebe] rounded-[6px] text-sm"
               >
                 출석체크
+              </button>
+              <button
+                onClick={() => {
+                  handleSubscribe();
+                  console.log("클릭");
+                }}
+                className="px-1 font-bold border border-[#bebebe] rounded-[6px] text-sm"
+              >
+                구독하기
               </button>
             </div>
             <div className="flex gap-1 text-sm text-white">
