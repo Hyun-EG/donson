@@ -28,6 +28,7 @@ const LoginForm = () => {
 
       if (res.ok) {
         await setUserIdAndOcid(userId);
+        sessionStorage.setItem("userId", userId);
         router.push("/");
         router.refresh();
       } else {
