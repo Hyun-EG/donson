@@ -11,7 +11,7 @@ const PostAlertToUserBox = () => {
   const handlePostAlertToUsers = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch("/api/send-test-push", {
+      const res = await fetch("/api/send-push-to-all", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

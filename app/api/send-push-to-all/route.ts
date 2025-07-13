@@ -1,35 +1,13 @@
-import webpush from "web-push";
-import { connectDB } from "@/util/mongodb";
+import { sendPushToAll } from "@/lib/sendPushToAll";
+import { NextRequest, NextResponse } from "next/server";
 
-webpush.setVapidDetails(
-  "mailto:codiee@naver.com",
-  process.env.VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!
-);
-
-type WebPushSubscription = {
-  endpoint: string;
-  expirationTime: number | null;
-  keys: {
-    p256dh: string;
-    auth: string;
-  };
-};
-
-export async function sendPushToAll(title: string, content: string) {
-  const db = (await connectDB).db("donson");
-
-  const subscriptions = await db
-    .collection<WebPushSubscription>("subscriptions")
-    .find()
-    .toArray();
-
-  const payload = JSON.stringify({
-    title,
-    body: content,
-  });
-
-  for (const sub of subscriptions) {
-    await webpush.sendNotification(sub, payload);
+export async function POST(req: NextRequest) {
+  const { title, content } = await req.json();
+  try {
+    await sendPushToAll(title, content);
+    return NextResponse.json({ message: "푸시 발송 성공" });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ message: "푸시 발송 실패" }, { status: 500 });
   }
 }
