@@ -1,5 +1,5 @@
 import { generateUniqueNumbers } from "@/util/generateUniqueNums";
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
 const db = (await connectDB).db("donson");

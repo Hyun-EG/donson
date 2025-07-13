@@ -1,5 +1,5 @@
 import { getUserCookies } from "@/util/getUserCookie";
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 import { redirect } from "next/navigation";
 import MepoGraph from "./_components/MepoGraph";
 import React from "react";

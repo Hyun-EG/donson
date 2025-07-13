@@ -18,7 +18,7 @@ const PostAlertToUserBox = () => {
         },
         body: JSON.stringify({
           title: inputTitle,
-          content: inputContent,
+          body: inputContent,
         }),
       });
       if (!res.ok) {

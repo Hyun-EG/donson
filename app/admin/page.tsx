@@ -1,4 +1,4 @@
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 import { getUserCookies } from "@/util/getUserCookie";
 import { redirect } from "next/navigation";
 import MaplePointPriceForm from "./_components/MaplePointPriceForm";

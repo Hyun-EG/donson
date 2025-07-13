@@ -1,4 +1,4 @@
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 
 const API_KEY = process.env.NEXON_API_KEY!;
 

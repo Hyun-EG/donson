@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import InfoBox from "./_components/InfoBox";
 import { getUserCookies } from "@/util/getUserCookie";
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 
 const page = async () => {
   const cookie = await getUserCookies();

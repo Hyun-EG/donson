@@ -2,7 +2,7 @@ import React from "react";
 import BaseBallBox from "./_components/BaseBallBox";
 import { getUserCookies } from "@/util/getUserCookie";
 import { redirect } from "next/navigation";
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 
 const BaseBall = async () => {
   const cookies = await getUserCookies();

@@ -4,7 +4,7 @@ const withPWA = require("next-pwa")({
   dest: "public",
   register: true,
   skipWaiting: true,
-  buildExcludes: [/app-build-manifest\.json$/],
+  swSrc: "custom-sw.js",
 });
 
 const nextConfig: NextConfig = {

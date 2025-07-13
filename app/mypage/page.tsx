@@ -2,7 +2,7 @@ import React from "react";
 import MyPageBox from "./_components/MyPageBox";
 import { getUserCookies } from "@/util/getUserCookie";
 import { redirect } from "next/navigation";
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 import { OrderedItemsType } from "./_components/types";
 
 const MyPage = async () => {

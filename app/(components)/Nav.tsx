@@ -1,4 +1,4 @@
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 import MainNav from "./MainNav";
 import { getUserCookies } from "@/util/getUserCookie";
 

@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import { addCharOcidToUser } from "@/lib/addCharOcidToUser";
 

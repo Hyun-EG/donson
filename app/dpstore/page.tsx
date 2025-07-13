@@ -2,7 +2,7 @@ import { getUserCookies } from "@/util/getUserCookie";
 import { redirect } from "next/navigation";
 import React from "react";
 import DPStoreBox from "./_components/DPStoreBox";
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 
 const DPStore = async () => {
   const cookie = await getUserCookies();

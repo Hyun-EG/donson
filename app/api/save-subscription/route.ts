@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectDB } from "@/util/mongodb";
+import { connectDB } from "@/mongodb";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
