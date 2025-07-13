@@ -42,5 +42,3 @@ next-env.d.ts
 
 # PWA
 public/workbox-*.js
-public/worker-*.js
-public/manifest.webmanifest
