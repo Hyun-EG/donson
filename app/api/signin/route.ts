@@ -1,7 +1,7 @@
 import { connectDB } from "@/util/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { signJWT } from "@/util/jwt";
+import { accessToken, refreshToken } from "@/util/jwt";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -39,7 +39,24 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    const token = signJWT({ userName, charName, userEmail, userId, ocid });
+    const token = accessToken({ userName, charName, userEmail, userId, ocid });
+    const refresh = refreshToken({
+      userName,
+      charName,
+      userEmail,
+      userId,
+      ocid,
+    });
+
+    const hashedRefresh = await bcrypt.hash(refresh, 10);
+
+    await db.collection("user").updateOne(
+      { userId },
+      {
+        $set: { refreshToken: hashedRefresh },
+      }
+    );
+
     const res = NextResponse.json(
       { message: "로그인에 성공하였습니다.", status: 200 },
       { status: 200 }
@@ -48,7 +65,14 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       path: "/",
       maxAge: 60 * 60,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    res.cookies.set("refreshToken", refresh, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+      secure: process.env.NODE_ENV === "production",
     });
 
     return res;
