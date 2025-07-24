@@ -22,7 +22,7 @@ const MainNav = ({ dp, isAdmin }: { dp: number; isAdmin: boolean }) => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 w-full h-14 px-3 flex justify-between items-center border-b border-[#bebebe] bg-white">
+    <nav className="fixed top-0 left-0 w-full h-14 px-3 flex justify-between items-center border-b border-[#bebebe] bg-white z-20">
       <ul className="flex items-center gap-4 text-xs">
         <img
           onClick={() => {
