@@ -6,34 +6,51 @@ export async function POST(req: NextRequest) {
 
   const db = (await connectDB).db("donson");
   const batDP = Number(battingDp);
-
   const parsedResult = Number(result);
 
+  const user = await db.collection("dp").findOne({ userId });
+
+  if (!user) {
+    return NextResponse.json(
+      { message: "유저 정보를 찾을 수 없습니다." },
+      { status: 404 }
+    );
+  }
+
+  if (user.dp < batDP) {
+    return NextResponse.json(
+      { message: "보유한 DP보다 더 큰 금액은 배팅할 수 없습니다." },
+      { status: 400 }
+    );
+  }
+
   if (selectedNum === parsedResult && parsedResult !== 1) {
+    const reward = batDP * parsedResult;
+
     await db.collection("dp").updateOne(
       { userId },
       {
-        $inc: {
-          dp: batDP * parsedResult,
-        },
+        $inc: { dp: reward },
       }
     );
+
     return NextResponse.json({
-      message: `게임에 승리하여 ${batDP * parsedResult}의 DP를 획득하였습니다`,
+      message: `게임에 승리하여 ${reward}의 DP를 획득하였습니다`,
     });
   }
 
   if (selectedNum === parsedResult && parsedResult === 1) {
+    const reward = Math.ceil(batDP / 2);
+
     await db.collection("dp").updateOne(
       { userId },
       {
-        $inc: {
-          dp: Math.ceil(batDP / 2),
-        },
+        $inc: { dp: reward },
       }
     );
+
     return NextResponse.json({
-      message: `게임에 승리하여 ${Math.ceil(batDP / 2)}의 DP를 획득하였습니다`,
+      message: `게임에 승리하여 ${reward}의 DP를 획득하였습니다`,
     });
   }
 
@@ -41,11 +58,10 @@ export async function POST(req: NextRequest) {
     await db.collection("dp").updateOne(
       { userId },
       {
-        $inc: {
-          dp: -batDP,
-        },
+        $inc: { dp: -batDP },
       }
     );
+
     return NextResponse.json({
       message: `게임에 패배하여 ${batDP}의 DP를 잃었습니다.`,
     });
