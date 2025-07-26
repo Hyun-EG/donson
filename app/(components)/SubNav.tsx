@@ -125,9 +125,6 @@ const SubNav = ({
             </li>
 
             <div className="flex justify-center items-center gap-1">
-              <span className="w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
-                N
-              </span>
               <li
                 style={{ fontWeight: pathName === "/dpstore" ? "bold" : "" }}
                 className="text-center text-sm text-[#555555]"
@@ -168,6 +165,22 @@ const SubNav = ({
                 }}
               >
                 <Link href="/dosin">도 신</Link>
+              </li>
+            </div>
+            <div className="flex justify-center items-center gap-1">
+              <span className="w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
+                N
+              </span>
+              <li
+                style={{
+                  fontWeight: pathName === "/loan" ? "bold" : "",
+                }}
+                className="text-center text-sm text-[#555555]"
+                onClick={() => {
+                  setIsShowMenu(false);
+                }}
+              >
+                <Link href="/loan">DP론</Link>
               </li>
             </div>
             <Link href="/weather">
