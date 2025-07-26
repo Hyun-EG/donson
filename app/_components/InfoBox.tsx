@@ -181,7 +181,7 @@ const InfoBox = ({
               </button>
             </div>
             <div className="flex gap-1 text-sm text-white">
-              <span className="px-1 font-bold bg-sky-500 rounded-[6px]">
+              <span className="px-1 font-bold bg-sky-500 border rounded-[6px]">
                 {charBasicInfo?.world_name}
               </span>
               <button
@@ -189,7 +189,7 @@ const InfoBox = ({
                   router.refresh();
                 }}
                 disabled={isLoading}
-                className="px-1 font-bold bg-gray-500 rounded-[6px]"
+                className="px-1 font-bold bg-gray-500 border rounded-[6px]"
               >
                 {isLoading ? "갱신 중" : "정보갱신"}
               </button>
