@@ -4,3 +4,11 @@ export type Contact = {
   category: string;
   content: string;
 };
+
+export type SearchUserType = {
+  userName: string;
+  userId: string;
+  userEmail: string;
+  userCharName: string;
+  dp: number;
+};

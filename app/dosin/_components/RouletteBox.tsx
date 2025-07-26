@@ -162,8 +162,11 @@ export default function RouletteBox({ userId }: { userId: string }) {
               - 1은 배팅금액의 <span className="text-red-500">50% </span>
               나머지는 해당하는 숫자의 배를 얻게됩니다.
             </li>
-            <li className="mt-4">ex. 배팅: 10DP 선택숫자: 3 승리보상: 30</li>
-            <li>ex. 배팅: 10DP 선택숫자: 1 승리보상: 5</li>
+            <li className="text-xs">- 승리시 배팅한 DP는 돌려받습니다.</li>
+            <li className="mt-4">
+              ex. 배팅: 10 DP 선택숫자: 3 승리보상: 30 DP
+            </li>
+            <li>ex. 배팅: 10 DP 선택숫자: 1 승리보상: 5 DP</li>
           </ul>
           <div className="my-10 flex justify-center">
             <button
