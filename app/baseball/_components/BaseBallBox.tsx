@@ -83,8 +83,9 @@ const BaseBallBox = ({ userId }: { userId: string }) => {
         <div>
           <div className="my-4">
             <p className="text-sm text-center font-bold">
-              승리 시 [<span className="text-sky-500"> 0.2dp </span>] 를
-              적립합니다.
+              <span className="text-red-500">EVENT</span> 승리 시 [
+              <span className="text-red-500"> 1 </span>
+              <span className="text-sky-500">dp </span>] 를 적립합니다.
             </p>
             <p className="text-center text-red-500 font-bold">
               게임 횟수: 무제한
