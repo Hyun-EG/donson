@@ -95,10 +95,10 @@ export async function DELETE(req: NextRequest) {
     );
   }
 
-  await db.collection("dp").updateOne({ userId }, { $inc: { dp: 1 } });
+  await db.collection("dp").updateOne({ userId }, { $inc: { dp: 5 } });
 
   return NextResponse.json(
-    { message: "정답입니다. 포인트 1 지급 완료", status: 200 },
+    { message: "정답입니다. 포인트 5 지급 완료", status: 200 },
     { status: 200 }
   );
 }
