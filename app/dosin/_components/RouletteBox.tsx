@@ -12,7 +12,7 @@ export default function RouletteBox({ userId }: { userId: string }) {
     "5",
     "1",
     "10",
-    "1",
+    "5",
     "3",
     "1",
     "5",
@@ -20,9 +20,9 @@ export default function RouletteBox({ userId }: { userId: string }) {
     "20",
     "1",
     "3",
-    "5",
-    "1",
     "10",
+    "1",
+    "5",
     "3",
     "1",
     "3",
@@ -39,6 +39,10 @@ export default function RouletteBox({ userId }: { userId: string }) {
   const handleSpin = () => {
     if (!selectedNum || !battingInputValue) {
       alert("필수 정보가 누락되었습니다.");
+      return;
+    }
+    if (Number(battingInputValue) < 10) {
+      alert("최소 10dp부터 배팅이 가능합니다.");
       return;
     }
     setResult(null);
