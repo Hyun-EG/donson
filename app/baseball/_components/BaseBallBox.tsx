@@ -2,7 +2,13 @@
 
 import React, { useState } from "react";
 
-const BaseBallBox = ({ userId }: { userId: string }) => {
+const BaseBallBox = ({
+  userId,
+  multiplier,
+}: {
+  userId: string;
+  multiplier: number;
+}) => {
   const [isStart, setIsStart] = useState(false);
   const [guessInput, setGuessInput] = useState("");
   const [answerInput, setAnswerInput] = useState("");
@@ -84,7 +90,10 @@ const BaseBallBox = ({ userId }: { userId: string }) => {
           <div className="my-4">
             <p className="text-sm text-center font-bold">
               <span className="text-red-500">EVENT</span> 승리 시 [
-              <span className="text-red-500"> 2 </span>
+              <span className="text-red-500">
+                {" "}
+                {Math.floor(0.2 * multiplier)}{" "}
+              </span>
               <span className="text-sky-500">dp </span>] 를 적립합니다.
             </p>
             <p className="text-center text-red-500 font-bold">
