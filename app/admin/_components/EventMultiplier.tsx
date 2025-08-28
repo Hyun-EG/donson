@@ -3,7 +3,13 @@
 import LoadingOverlay from "@/app/(components)/LoadingOverlay";
 import { useState } from "react";
 
-const MaplePointPriceForm = ({ userId }: { userId: string }) => {
+const MaplePointPriceForm = ({
+  userId,
+  multiplier,
+}: {
+  userId: string;
+  multiplier: string;
+}) => {
   const [eventMultiplierInputValue, setEventMultiplierInputValue] =
     useState<number>();
 
@@ -63,8 +69,8 @@ const MaplePointPriceForm = ({ userId }: { userId: string }) => {
       </form>
       <div className="mt-4">
         <p className="text-center">
-          현재 야구게임 배율은 <span className="text-red-500">배율</span>{" "}
-          입니다.
+          현재 야구게임 배율은{" "}
+          <span className="text-red-500"> {multiplier} </span> 입니다.
         </p>
       </div>
     </>
