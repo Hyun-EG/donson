@@ -6,7 +6,7 @@ const AdminNav = () => {
   const { selectedNavItem, setSelectedNavItem } = useAdminNavStore();
 
   const items: NavItem[] = [
-    "메포반영",
+    "이벤배율",
     "알림전송",
     "문의내역",
     "주문내역",

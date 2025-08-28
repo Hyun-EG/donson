@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export type NavItem =
-  | "메포반영"
+  | "이벤배율"
   | "알림전송"
   | "문의내역"
   | "주문내역"
@@ -13,7 +13,7 @@ interface AdminNavStore {
 }
 
 export const useAdminNavStore = create<AdminNavStore>((set) => ({
-  selectedNavItem: "메포반영",
+  selectedNavItem: "이벤배율",
   setSelectedNavItem: (item) => {
     set({ selectedNavItem: item });
   },
