@@ -1,7 +1,7 @@
 "use client";
 
 import LoadingOverlay from "@/app/(components)/LoadingOverlay";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const MaplePointPriceForm = ({
   userId,
@@ -14,6 +14,14 @@ const MaplePointPriceForm = ({
     useState<number>();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [curMultiplier, setCurMultiplier] = useState("");
+
+  useEffect(() => {
+    if (!multiplier) {
+      return;
+    }
+    setCurMultiplier(multiplier);
+  }, [multiplier]);
 
   const handleSubmitEvent = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!Number.isFinite(eventMultiplierInputValue)) {
@@ -70,7 +78,11 @@ const MaplePointPriceForm = ({
       <div className="mt-4">
         <p className="text-center">
           현재 야구게임 배율은{" "}
-          <span className="text-red-500"> {multiplier} </span> 입니다.
+          <span className="text-red-500">
+            {" "}
+            {curMultiplier ? curMultiplier : "알수없음"}{" "}
+          </span>{" "}
+          입니다.
         </p>
       </div>
     </>
