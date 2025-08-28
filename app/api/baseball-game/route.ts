@@ -76,6 +76,10 @@ export async function DELETE(req: NextRequest) {
   const { userId, result } = await req.json();
 
   const target = await db.collection("baseball").findOne({ userId });
+  const admin = await db
+    .collection("baseball-multiplier")
+    .findOne({ userId: "codiee" });
+  const multiplier = admin?.multiplier;
 
   if (!target) {
     return NextResponse.json(
@@ -95,10 +99,15 @@ export async function DELETE(req: NextRequest) {
     );
   }
 
-  await db.collection("dp").updateOne({ userId }, { $inc: { dp: 2 } });
+  await db
+    .collection("dp")
+    .updateOne({ userId }, { $inc: { dp: Math.ceil(0.2 * multiplier) } });
 
   return NextResponse.json(
-    { message: "정답입니다. 포인트 2 지급 완료", status: 200 },
+    {
+      message: `정답입니다. 포인트 ${Math.ceil(0.2 * multiplier)} 지급 완료`,
+      status: 200,
+    },
     { status: 200 }
   );
 }
