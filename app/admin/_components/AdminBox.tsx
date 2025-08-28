@@ -4,7 +4,7 @@ import { Contact } from "./types";
 import InquiryDetailsBox from "./InquiryDetailsBox";
 import OrderedBox from "./OrderedBox";
 import AdminNav from "./AdminNav";
-import MaplePointPriceForm from "./MaplePointPriceForm";
+import EventMultiplier from "./EventMultiplier";
 import PostAlertToUserBox from "./PostAlertToUserBox";
 import { useAdminNavStore } from "@/store/adminNavStore";
 import SearchCustomer from "./SearchCustomer";
@@ -12,7 +12,9 @@ import SearchCustomer from "./SearchCustomer";
 const AdminBox = ({
   contacts,
   groupedOrders,
+  userId,
 }: {
+  userId: string;
   contacts: Contact[];
   groupedOrders: Record<string, { title: string; done: boolean }[]>;
 }) => {
@@ -20,7 +22,7 @@ const AdminBox = ({
   return (
     <section>
       <AdminNav />
-      {selectedNavItem === "메포반영" && <MaplePointPriceForm />}
+      {selectedNavItem === "이벤배율" && <EventMultiplier userId={userId} />}
       {selectedNavItem === "알림전송" && <PostAlertToUserBox />}
       {selectedNavItem === "문의내역" && (
         <InquiryDetailsBox contacts={contacts} />

@@ -9,6 +9,7 @@ const Admin = async () => {
   if (!cookie) {
     redirect("/signin");
   }
+  const userId = await cookie.userId;
 
   const db = (await connectDB).db("donson");
   const rawContact = await db.collection("contact").find().toArray();
@@ -33,7 +34,11 @@ const Admin = async () => {
   return (
     <section className="mb-10">
       <h1 className="text-lg text-center font-bold">관리자 메뉴</h1>
-      <AdminBox contacts={contact} groupedOrders={groupedOrders} />
+      <AdminBox
+        contacts={contact}
+        groupedOrders={groupedOrders}
+        userId={userId}
+      />
     </section>
   );
 };
