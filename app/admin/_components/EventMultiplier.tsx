@@ -17,7 +17,7 @@ const MaplePointPriceForm = ({
   const [curMultiplier, setCurMultiplier] = useState<string | null>(null);
 
   useEffect(() => {
-    if (multiplier !== undefined) {
+    if (multiplier !== null) {
       setCurMultiplier(multiplier);
       setIsLoading(false)
     }
