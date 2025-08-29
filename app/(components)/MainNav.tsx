@@ -51,17 +51,12 @@ const MainNav = ({ dp, isAdmin }: { dp: number; isAdmin: boolean }) => {
         >
           <Link href="/event">이벤트</Link>
         </li>
-        <div className="relative">
           <li
             style={{ fontWeight: pathName === "/cash" ? "bold" : "" }}
             className="cursor-pointer"
           >
             <Link href="/cash">캐시샵 공지</Link>
           </li>
-          <span className="absolute top-0 right-0 translate-x-2/3 -translate-y-2/3 w-3 h-3 flex justify-center items-center text-[10px] text-white bg-red-500 rounded-full">
-            N
-          </span>
-        </div>
       </ul>
       <button
         onClick={() => {
