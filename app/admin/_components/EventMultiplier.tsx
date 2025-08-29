@@ -14,13 +14,13 @@ const MaplePointPriceForm = ({
     useState<number>();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [curMultiplier, setCurMultiplier] = useState("");
+  const [curMultiplier, setCurMultiplier] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!multiplier) {
-      return;
+    if (multiplier !== undefined) {
+      setCurMultiplier(multiplier);
+      setIsLoading(false)
     }
-    setCurMultiplier(multiplier);
   }, [multiplier]);
 
   const handleSubmitEvent = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -80,7 +80,7 @@ const MaplePointPriceForm = ({
           현재 야구게임 배율은{" "}
           <span className="text-red-500">
             {" "}
-            {curMultiplier ? curMultiplier : "알수없음"}{" "}
+            {isLoading ?  "로딩 중" : curMultiplier }{" "}
           </span>{" "}
           입니다.
         </p>
