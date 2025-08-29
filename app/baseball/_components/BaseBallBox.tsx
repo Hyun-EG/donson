@@ -92,7 +92,7 @@ const BaseBallBox = ({
               <span className="text-red-500">EVENT</span> 승리 시 [
               <span className="text-red-500">
                 {" "}
-                {Math.floor(0.2 * multiplier)}{" "}
+                {0.2 * multiplier}{" "}
               </span>
               <span className="text-sky-500">dp </span>] 를 적립합니다.
             </p>
