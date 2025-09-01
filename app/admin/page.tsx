@@ -15,11 +15,6 @@ const Admin = async () => {
   const rawContact = await db.collection("contact").find().toArray();
   const rawOrders = await db.collection("ordered-items").find().toArray();
 
-  const eventMultiplier = await db
-    .collection("baseball-multiplier")
-    .findOne({ userId: `${process.env.NAVER_ID}` });
-  const multiplier = Number(eventMultiplier?.multiplier);
-
   const contact: Contact[] = rawContact.map((doc) => ({
     _id: doc._id.toString(),
     userId: doc.userId,
@@ -43,7 +38,6 @@ const Admin = async () => {
         contacts={contact}
         groupedOrders={groupedOrders}
         userId={userId}
-        multiplier={multiplier}
       />
     </section>
   );

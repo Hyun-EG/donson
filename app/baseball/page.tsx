@@ -9,10 +9,6 @@ const BaseBall = async () => {
   const userId = await cookies?.userId;
 
   const db = (await connectDB).db("donson");
-  const admin = await db
-    .collection("baseball-multiplier")
-    .findOne({ userId: `${process.env.NAVER_ID}` });
-  const multiplier = admin?.multiplier;
 
   if (!userId || typeof userId !== "string") {
     redirect("/signin");
@@ -23,7 +19,7 @@ const BaseBall = async () => {
   return (
     <section>
       <h1 className="text-center text-lg font-bold">야구게임</h1>
-      <BaseBallBox userId={userId} multiplier={multiplier} />
+      <BaseBallBox userId={userId} />
     </section>
   );
 };

@@ -1,9 +1,10 @@
 import { connectDB } from "@/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
+const db = (await connectDB).db("donson");
+
 export async function POST(req: NextRequest) {
   const { value, userId } = await req.json();
-  const db = (await connectDB).db("donson");
 
   try {
     await db
@@ -20,4 +21,12 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  const item = await db
+    .collection("baseball-multiplier")
+    .findOne({ userId: process.env.NAVER_ID });
+  const multiplier = await item?.multiplier;
+  return NextResponse.json({ multiplier }, { status: 200 });
 }

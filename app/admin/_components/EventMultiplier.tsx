@@ -3,32 +3,14 @@
 import LoadingOverlay from "@/app/(components)/LoadingOverlay";
 import { useEffect, useState } from "react";
 
-const MaplePointPriceForm = ({
-  userId,
-  multiplier,
-}: {
-  userId: string;
-  multiplier: number;
-}) => {
+const MaplePointPriceForm = ({ userId }: { userId: string }) => {
   const [eventMultiplierInputValue, setEventMultiplierInputValue] =
     useState<number>();
-
+  const [curMultiplier, setCurMultiplier] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [curMultiplier, setCurMultiplier] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (multiplier !== null) {
-      setCurMultiplier(multiplier);
-    }
-  }, [multiplier]);
-
-  const handleSubmitEvent = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!Number.isFinite(eventMultiplierInputValue)) {
-      alert("배율을 입력해주세요.");
-      return;
-    }
-
-    e.stopPropagation();
+  const handleSubmitEvent = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsLoading(true);
     try {
       const res = await fetch("/api/baseball-multiplier", {
@@ -36,26 +18,42 @@ const MaplePointPriceForm = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId, value: eventMultiplierInputValue }),
+        body: JSON.stringify({
+          userId,
+          value: eventMultiplierInputValue,
+        }),
       });
+      const result = await res.json();
       if (!res.ok) {
-        alert("야구 게임 배율 변경에 실패하였습니다.");
+        alert(result.message);
         return;
       }
-      alert("야구 게임 배율을 완료했습니다.");
+      alert(
+        `배율 변경에 성공하였습니다! 현재 배율은 ${eventMultiplierInputValue} 입니다.`
+      );
       setEventMultiplierInputValue(0);
-      setCurMultiplier(eventMultiplierInputValue || null);
+      setCurMultiplier(eventMultiplierInputValue || 0);
     } catch (error) {
-      console.error("야구게임 배율 등록 중 에러가 발생하였습니다.", error);
+      console.error(error, "서버에러");
     } finally {
       setIsLoading(false);
     }
   };
 
+  const fetchMultiplier = async () => {
+    const res = await fetch("/api/baseball-multiplier");
+    const data = await res.json();
+    setCurMultiplier(data.multiplier);
+  };
+
+  useEffect(() => {
+    fetchMultiplier();
+  }, []);
+
   return (
     <>
-      <form className="mt-4 flex flex-col gap-2">
-        {isLoading && <LoadingOverlay />}
+      {isLoading && <LoadingOverlay />}
+      <form onSubmit={handleSubmitEvent} className="mt-4 flex flex-col gap-2">
         <h1 className="text-center font-bold">
           야구게임 변경 배율을 입력해주세요.
         </h1>
@@ -69,8 +67,7 @@ const MaplePointPriceForm = ({
           }}
         />
         <button
-          onClick={(e) => handleSubmitEvent(e)}
-          type="button"
+          type="submit"
           className="w-full px-2 py-1 bg-sky-500 text-white"
         >
           배율변경
@@ -79,10 +76,7 @@ const MaplePointPriceForm = ({
       <div className="mt-4">
         <p className="text-center">
           현재 야구게임 배율은{" "}
-          <span className="text-red-500">
-            {isLoading ? "로딩 중" : curMultiplier || "설정되지 않음"}
-          </span>{" "}
-          입니다.
+          <span className="text-red-500">{curMultiplier}</span> 입니다.
         </p>
       </div>
     </>

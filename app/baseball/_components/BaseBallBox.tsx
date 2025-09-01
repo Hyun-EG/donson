@@ -1,14 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import LoadingOverlay from "@/app/(components)/LoadingOverlay";
+import React, { useEffect, useState } from "react";
 
-const BaseBallBox = ({
-  userId,
-  multiplier,
-}: {
-  userId: string;
-  multiplier: number;
-}) => {
+const BaseBallBox = ({ userId }: { userId: string }) => {
   const [isStart, setIsStart] = useState(false);
   const [guessInput, setGuessInput] = useState("");
   const [answerInput, setAnswerInput] = useState("");
@@ -17,6 +12,18 @@ const BaseBallBox = ({
   >([]);
   const [turn, setTurn] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [curMultiplier, setCurMultiplier] = useState(0);
+
+  const fetchMultiplier = async () => {
+    const res = await fetch("/api/baseball-multiplier");
+    const data = await res.json();
+    setCurMultiplier(data.multiplier * 0.2);
+  };
+
+  useEffect(() => {
+    fetchMultiplier();
+  }, []);
 
   const handleStart = async () => {
     setIsLoading(true);
@@ -93,6 +100,7 @@ const BaseBallBox = ({
 
   return (
     <section className="w-full px-2 py-1 mt-2 border">
+      {isLoading && <LoadingOverlay />}
       {!isStart && (
         <div>
           <div className="my-4">
@@ -100,7 +108,7 @@ const BaseBallBox = ({
               <span className="text-red-500">EVENT</span> 승리 시 [
               <span className="text-red-500">
                 {" "}
-                {multiplier ? Number(0.2 * multiplier) : "로딩 중"}{" "}
+                {curMultiplier ? curMultiplier : "로딩 중"}{" "}
               </span>
               <span className="text-sky-500">dp </span>] 를 적립합니다.
             </p>
