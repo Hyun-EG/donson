@@ -8,25 +8,17 @@ const MaplePointPriceForm = ({
   multiplier,
 }: {
   userId: string;
-  multiplier: number | undefined;
+  multiplier: number;
 }) => {
   const [eventMultiplierInputValue, setEventMultiplierInputValue] =
     useState<number>();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [curMultiplier, setCurMultiplier] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [curMultiplier, setCurMultiplier] = useState<number | null>(null);
 
   useEffect(() => {
-    if (multiplier !== undefined && multiplier !== null) {
-      setCurMultiplier(multiplier.toString());
-      setIsLoading(false);
-    } else if (multiplier === undefined) {
-      // multiplier가 아직 로드되지 않은 상태
-      setIsLoading(true);
-    } else {
-      // multiplier가 null인 경우 (실제로 설정되지 않음)
-      setCurMultiplier(null);
-      setIsLoading(false);
+    if (multiplier !== null) {
+      setCurMultiplier(multiplier);
     }
   }, [multiplier]);
 
@@ -52,9 +44,9 @@ const MaplePointPriceForm = ({
       }
       alert("야구 게임 배율을 완료했습니다.");
       setEventMultiplierInputValue(0);
-      setCurMultiplier(eventMultiplierInputValue?.toString() || null);
+      setCurMultiplier(eventMultiplierInputValue || null);
     } catch (error) {
-      console.error("메이플 포인트 가격 등록 중 에러가 발생했습니다.", error);
+      console.error("야구게임 배율 등록 중 에러가 발생하였습니다.", error);
     } finally {
       setIsLoading(false);
     }

@@ -18,7 +18,7 @@ const Admin = async () => {
   const eventMultiplier = await db
     .collection("baseball-multiplier")
     .findOne({ userId: `${process.env.NAVER_ID}` });
-  const multiplier = eventMultiplier?.multiplier;
+  const multiplier = Number(eventMultiplier?.multiplier);
 
   const contact: Contact[] = rawContact.map((doc) => ({
     _id: doc._id.toString(),

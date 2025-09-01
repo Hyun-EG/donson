@@ -16,22 +16,30 @@ const BaseBallBox = ({
     { guess: string; strike: number; ball: number; out: number }[]
   >([]);
   const [turn, setTurn] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleStart = async () => {
-    const res = await fetch("/api/baseball-game", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId }),
-    });
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/baseball-game", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
 
-    if (res.ok) {
-      setIsStart(true);
-      setHistory([]);
-      setTurn(0);
-    } else {
-      alert("이미 게임이 시작되었습니다.");
+      if (res.ok) {
+        setIsStart(true);
+        setHistory([]);
+        setTurn(0);
+      } else {
+        alert("이미 게임이 시작되었습니다.");
+      }
+    } catch (error) {
+      console.error("야구게임 시작 중 에러가 발생하였습니다.", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

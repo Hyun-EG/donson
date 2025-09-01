@@ -16,7 +16,7 @@ const AdminBox = ({
   multiplier,
 }: {
   userId: string;
-  multiplier: number | undefined;
+  multiplier: number;
   contacts: Contact[];
   groupedOrders: Record<string, { title: string; done: boolean }[]>;
 }) => {
