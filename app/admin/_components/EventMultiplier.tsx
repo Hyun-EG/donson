@@ -8,7 +8,7 @@ const MaplePointPriceForm = ({
   multiplier,
 }: {
   userId: string;
-  multiplier: string;
+  multiplier: number | undefined;
 }) => {
   const [eventMultiplierInputValue, setEventMultiplierInputValue] =
     useState<number>();
@@ -17,10 +17,15 @@ const MaplePointPriceForm = ({
   const [curMultiplier, setCurMultiplier] = useState<string | null>(null);
 
   useEffect(() => {
-    if (multiplier !== null && multiplier !== undefined) {
-      setCurMultiplier(multiplier);
+    if (multiplier !== undefined && multiplier !== null) {
+      setCurMultiplier(multiplier.toString());
       setIsLoading(false);
+    } else if (multiplier === undefined) {
+      // multiplier가 아직 로드되지 않은 상태
+      setIsLoading(true);
     } else {
+      // multiplier가 null인 경우 (실제로 설정되지 않음)
+      setCurMultiplier(null);
       setIsLoading(false);
     }
   }, [multiplier]);

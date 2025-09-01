@@ -13,10 +13,10 @@ const AdminBox = ({
   contacts,
   groupedOrders,
   userId,
-  multiplier
+  multiplier,
 }: {
   userId: string;
-  multiplier:string
+  multiplier: number | undefined;
   contacts: Contact[];
   groupedOrders: Record<string, { title: string; done: boolean }[]>;
 }) => {
@@ -24,7 +24,9 @@ const AdminBox = ({
   return (
     <section>
       <AdminNav />
-      {selectedNavItem === "이벤배율" && <EventMultiplier userId={userId} multiplier={multiplier} />}
+      {selectedNavItem === "이벤배율" && (
+        <EventMultiplier userId={userId} multiplier={multiplier} />
+      )}
       {selectedNavItem === "알림전송" && <PostAlertToUserBox />}
       {selectedNavItem === "문의내역" && (
         <InquiryDetailsBox contacts={contacts} />
